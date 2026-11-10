@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In & Register | Aura Grand</title>
+    <link rel="stylesheet" href="{% static 'style/login.css' %}">
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <!-- Back to Home Link -->
+        <a href="{% url 'landing' %}" class="back-home"><i class="fa-solid fa-arrow-left"></i> Return to Home</a>
+
+        <div class="auth-card">
+            <!-- Brand Logo Header -->
+            <div class="auth-header">
+                <a href="{% url 'landing' %}" class="logo">
+                    <span class="logo-mark">AG</span>
+                    <span class="logo-text">AURA GRAND</span>
+                </a>
+                <p id="authSubtitle">Access your membership profile & bookings</p>
+            </div>
+
+            <!-- Form Toggle Tabs -->
+            <div class="auth-tabs">
+                <a href="{% url 'login' %}" class="btn btn-outline" id="loginBtn">Sign In</a>
+                <a href="{% url 'signup' %}" class="btn btn-outline" id="loginBtn">Create Account</a>
+            </div>
+
+            <!-- SIGN IN FORM -->
+            {% if form.errors %}
+                <p style="color: red; font-size: 14px;">Incorrect Username or Password. Please try again.</p>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px;">
+                Log In
+                </button>
+            </form>
+
+            <p style="text-align: center; margin-top: 15px; font-size: 14px;">
+                Don't have an account? <a href="{% url 'signup' %}">Sign up</a>
+            </p>
+        </div>
+        
+        <div class="auth-footer-note">
+            <p>&copy; 2026 Aura Grand Hotel & Suites. Secure Client Access.</p>
+        </div>
+    </div>
+
+    <!-- SCRIPT LINK -->
+    <script src="script.js"></script>
+</body>
+</html>
