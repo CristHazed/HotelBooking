@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Receipt #{{ booking.reservation_number }}</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f5f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .receipt-card { background: #ffffff; width: 450px; padding: 35px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-top: 6px solid #1e293b; }
+        .header { text-align: center; border-bottom: 2px dashed #e2e8f0; padding-bottom: 20px; margin-bottom: 20px; }
+        .header h2 { margin: 0; color: #0f172a; font-size: 22px; }
+        .header p { color: #64748b; font-size: 13px; margin-top: 5px; }
+        .res-badge { background: #f8fafc; border: 1px solid #cbd5e1; padding: 12px; text-align: center; border-radius: 6px; margin-bottom: 20px; }
+        .res-badge span { font-size: 18px; font-weight: bold; color: #0f172a; letter-spacing: 1px; }
+        .details-group { margin-bottom: 15px; font-size: 14px; color: #334155; display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+        .details-group span:first-child { color: #64748b; font-weight: 500; }
+        .details-group span:last-child { font-weight: 600; text-align: right; }
+        .actions { margin-top: 25px; display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 10px; text-align: center; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .btn-primary { background: #0f172a; color: white; }
+        .btn-outline { background: white; color: #0f172a; border: 1px solid #cbd5e1; }
+        @media print {
+            body { background: white; }
+            .receipt-card { box-shadow: none; border: none; width: 100%; }
+            .actions { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="receipt-card">
+        <div class="header">
+            <h2>Luxious Hotel</h2>
+            <p>Official Digital Receipt</p>
+        </div>
+
+        <div class="res-badge">
+            <span style="font-size: 12px; color: #64748b; display: block; margin-bottom: 3px;">RESERVATION NUMBER</span>
+            <span>{{ booking.reservation_number }}</span>
+        </div>
+
+        <div class="details-group">
+            <span>Guest Name:</span>
+            <span>{{ request.user.userprofile.fullname }}</span>
+        </div>
+        <div class="details-group">
+            <span>Username:</span>
+            <span>@{{ request.user.username }}</span>
+        </div>
+        <div class="details-group">
+            <span>Email:</span>
+            <span>{{ request.user.userprofile.email }}</span>
+        </div>
+        <div class="details-group">
+            <span>Reserved Room:</span>
+            <span>{{ booking.venue.name }}</span>
+        </div>
+        <div class="details-group">
+            <span>Room Capacity:</span>
+            <span>{{ booking.venue.capacity }} Guests</span>
+        </div>
+        <div class="details-group">
+            <span>Check-in / Date:</span>
+            <span>{{ booking.booking_date|date:"F j, Y, g:i a" }}</span>
+        </div>
+        <div class="details-group">
+            <span>Status:</span>
+            <span style="color: #16a34a;">{{ booking.status }}</span>
+        </div>
+
+        <div class="actions">
+            <button onclick="window.print()" class="btn btn-outline">Print Receipt</button>
+            <a href="{% url 'confirmation' %}" class="btn btn-primary">Book Another</a>
+        </div>
+    </div>
+
+</body>
+</html>
