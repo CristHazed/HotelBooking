@@ -4,13 +4,15 @@ from django import forms
 from .models import UserProfile, Booking
 
 class CustomSignUpForm(UserCreationForm):
-    # Add fields for your UserProfile model with custom widget attributes
     fullname = forms.CharField(
         max_length=150, 
         widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Charlotte Hamilton'})
     )
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'charlotte@example.com'})
+    )
+    phone = forms.CharField(max_length=20, required=False,
+        widget=forms.TextInput(attrs={"class": "form-input", "placeholder": "+65 8123 4567"}),
     )
 
     class Meta(UserCreationForm.Meta):
@@ -26,7 +28,8 @@ class CustomSignUpForm(UserCreationForm):
             UserProfile.objects.create(
                 user=user,
                 fullname=self.cleaned_data['fullname'],
-                email=self.cleaned_data['email']
+                email=self.cleaned_data['email'],
+                phone=self.cleaned_data['phone']
             )
         return user
 

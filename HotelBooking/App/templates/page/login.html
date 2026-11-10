@@ -35,6 +35,13 @@
             </div>
 
             <!-- SIGN IN FORM -->
+            {% if messages %}
+            {% for message in messages %}
+            <div class="form-message {{ message.tags }}" role="status">
+            {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
             {% if form.errors %}
                 <p style="color: red; font-size: 14px;">Incorrect Username or Password. Please try again.</p>
             {% endif %}

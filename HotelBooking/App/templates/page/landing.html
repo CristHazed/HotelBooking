@@ -1,461 +1,155 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura Grand Luxury Hotel & Suites</title>
-    <link rel="stylesheet" href="{% static 'style/landing.css' %}">
-    <!-- Google Fonts & FontAwesome -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Discover a forest-inspired luxury stay at Luxious Hotel.">
+  <title>Luxious Hotel | A forest retreat</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style/landing.css' %}">
+  <script src="{% static 'JSFile/main.js' %}" defer></script>
 </head>
 <body>
+  <div class="top-strip">
+    <span>AN INTIMATE FOREST RETREAT</span>
+    <span>Modern comfort, rooted in nature</span>
+  </div>
 
-    <!-- TOP NOTIFICATION BAR -->
-    <div class="top-bar">
-        <div class="container top-bar-content">
-            <div class="top-bar-left">
-                <span><i class="fa-solid fa-phone"></i> +1 (800) 492-8833</span>
-                <span><i class="fa-solid fa-envelope"></i> reservations@auragrand.com</span>
-            </div>
-            <div class="top-bar-right">
-                <div class="dropdown">
-                    <span class="dropdown-toggle">USD ($) <i class="fa-solid fa-chevron-down"></i></span>
-                </div>
-                <div class="dropdown">
-                    <span class="dropdown-toggle">English <i class="fa-solid fa-chevron-down"></i></span>
-                </div>
-            </div>
-        </div>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="{% url 'landing' %}">
+        <span class="brand-mark">L</span>
+        <span class="brand-name">LUXIOUS <small>HOTEL</small></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav">
+        <a href="#experience">The retreat</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#amenities">Experiences</a>
+        <a href="#offers">Offers</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="sign-in" href="{% url 'login' %}">Sign in</a>
+        <a class="button button-gold" href="#booking">Book your stay <span>↗</span></a>
+      </div>
     </div>
+  </header>
 
-    <!-- HEADER & NAVIGATION -->
-    <header class="header" id="header">
-        <div class="container nav-container">
-            <a href="#" class="logo">
-                <span class="logo-mark">AG</span>
-                <span class="logo-text">AURA GRAND</span>
-            </a>
-            <nav class="nav-menu" id="navMenu">
-                <a href="#hero" class="nav-link active">Home</a>
-                <a href="#suites" class="nav-link">Suites & Rooms</a>
-                <a href="#amenities" class="nav-link">Amenities</a>
-                <a href="#packages" class="nav-link">Offers</a>
-                <a href="#testimonials" class="nav-link">Reviews</a>
-            </nav>
-            <div class="nav-actions">
-                <a href="{% url 'login' %}" class="btn btn-outline" id="loginBtn">Sign In</a>
-                <a href="#suites" class="btn btn-primary">Book Now</a>
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- HERO SECTION -->
-    <section class="hero" id="hero">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <span class="badge-pill">Unrivaled Hospitality & Elegance</span>
-            <h1 class="hero-title">Where Timeless Luxury <br>Meets Modern Serenity</h1>
-            <p class="hero-subtitle">Experience bespoke suites, world-class culinary mastery, and immaculate service in the heart of the coast.</p>
-        </div>
-
-        <!-- SEARCH / BOOKING BAR -->
-        <div class="container booking-bar-container">
-            <form class="booking-bar" id="bookingForm">
-                <div class="booking-field">
-                    <label><i class="fa-solid fa-location-dot"></i> Destination</label>
-                    <select class="booking-input">
-                        <option>Aura Grand Resort, Malibu Coast</option>
-                        <option>Aura Sky Tower, New York</option>
-                        <option>Aura Sanctuary, Kyoto</option>
-                    </select>
-                </div>
-                <div class="booking-field">
-                    <label><i class="fa-regular fa-calendar"></i> Check-in</label>
-                    <input type="date" class="booking-input" id="checkInDate" value="2026-06-01">
-                </div>
-                <div class="booking-field">
-                    <label><i class="fa-regular fa-calendar"></i> Check-out</label>
-                    <input type="date" class="booking-input" id="checkOutDate" value="2026-06-07">
-                </div>
-                <div class="booking-field">
-                    <label><i class="fa-regular fa-user"></i> Guests & Rooms</label>
-                    <select class="booking-input">
-                        <option>2 Adults, 1 Room</option>
-                        <option>1 Adult, 1 Room</option>
-                        <option>Family Suite (4 Guests)</option>
-                        <option>Penthouse (Custom)</option>
-                    </select>
-                </div>
-                <div class="booking-submit">
-                    <button type="submit" class="btn btn-primary btn-block">Check Availability</button>
-                </div>
-            </form>
-        </div>
+  <main>
+    <section class="hero" id="experience">
+      <div class="hero-photo" role="img" aria-label="Sunlight falling through a quiet forest"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow eyebrow-light">A slower kind of stay</p>
+        <h1>Where the forest<br>meets <em>fine living.</em></h1>
+        <p>
+          Step into a quieter world of natural textures, considered comfort
+          and warm hospitality.
+        </p>
+        <a class="button button-gold" href="#booking">Discover your stay <span>↗</span></a>
+      </div>
+      <span class="hero-caption">LUXIOUS HOTEL · NATURE, REFINED</span>
     </section>
 
-    <!-- SUITES & ROOMS SECTION -->
-    <section class="section suites-section" id="suites">
-        <div class="container">
-            <div class="section-header text-center">
-                <span class="section-tag">Accommodation</span>
-                <h2 class="section-title">Exquisite Rooms & Suites</h2>
-                <p class="section-desc">Curated sanctuaries designed with bespoke furnishings, organic linens, and expansive panoramic views.</p>
-            </div>
+    <section class="booking-panel" id="booking">
+      <div class="booking-intro">
+        <p class="eyebrow">Make yourself at home</p>
+        <h2>Your forest<br><em>escape begins here.</em></h2>
+        <p>Choose your room and arrival date to begin a reservation.</p>
+      </div>
 
-            <!-- Filter Tabs -->
-            <div class="filter-tabs" id="roomFilters">
-                <button class="filter-btn active" data-filter="all">All Sanctuaries</button>
-                <button class="filter-btn" data-filter="luxury">Luxury Suites</button>
-                <button class="filter-btn" data-filter="ocean">Ocean View</button>
-                <button class="filter-btn" data-filter="deluxe">Deluxe Rooms</button>
-            </div>
+      <form class="booking-form" method="post" action="{% url 'book_venue' %}">
+        {% csrf_token %}
+        {{ booking_form.non_field_errors }}
 
-            <!-- Rooms Grid -->
-            <div class="rooms-grid" id="roomsGrid">
-                <!-- Card 1 -->
-                <div class="room-card" data-category="ocean luxury">
-                    <div class="room-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Presidential Ocean Suite">
-                        <span class="room-badge">Ocean View</span>
-                    </div>
-                    <div class="room-body">
-                        <div class="room-meta-top">
-                            <span><i class="fa-solid fa-ruler-combined"></i> 85 m²</span>
-                            <span><i class="fa-solid fa-bed"></i> King Bed</span>
-                            <span><i class="fa-solid fa-user-group"></i> 3 Guests</span>
-                        </div>
-                        <h3 class="room-title">Presidential Ocean Suite</h3>
-                        <p class="room-excerpt">Floor-to-ceiling glass windows overlooking the azure coastline, private wraparound balcony, and marble soaking tub.</p>
-                        <div class="room-footer">
-                            <div class="room-price">
-                                <span class="amount">$850</span>
-                                <span class="period">/ night</span>
-                            </div>
-                            <button class="btn btn-outline btn-sm reserve-btn" data-room="Presidential Ocean Suite" data-price="$850">Reserve</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="room-card" data-category="luxury">
-                    <div class="room-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80" alt="Penthouse Skyline Suite">
-                        <span class="room-badge">Top Floor</span>
-                    </div>
-                    <div class="room-body">
-                        <div class="room-meta-top">
-                            <span><i class="fa-solid fa-ruler-combined"></i> 110 m²</span>
-                            <span><i class="fa-solid fa-bed"></i> California King</span>
-                            <span><i class="fa-solid fa-user-group"></i> 4 Guests</span>
-                        </div>
-                        <h3 class="room-title">Penthouse Skyline Suite</h3>
-                        <p class="room-excerpt">Unmatched urban elevation featuring a dedicated butler service, private rooftop terrace, and custom Italian lounge.</p>
-                        <div class="room-footer">
-                            <div class="room-price">
-                                <span class="amount">$1,250</span>
-                                <span class="period">/ night</span>
-                            </div>
-                            <button class="btn btn-outline btn-sm reserve-btn" data-room="Penthouse Skyline Suite" data-price="$1,250">Reserve</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="room-card" data-category="deluxe">
-                    <div class="room-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80" alt="Signature Deluxe Room">
-                        <span class="room-badge">Best Value</span>
-                    </div>
-                    <div class="room-body">
-                        <div class="room-meta-top">
-                            <span><i class="fa-solid fa-ruler-combined"></i> 48 m²</span>
-                            <span><i class="fa-solid fa-bed"></i> Queen Bed</span>
-                            <span><i class="fa-solid fa-user-group"></i> 2 Guests</span>
-                        </div>
-                        <h3 class="room-title">Signature Deluxe Room</h3>
-                        <p class="room-excerpt">Quiet courtyard views, minimalist artisanal woodwork, rainfall walk-in shower, and bespoke workspace.</p>
-                        <div class="room-footer">
-                            <div class="room-price">
-                                <span class="amount">$420</span>
-                                <span class="period">/ night</span>
-                            </div>
-                            <button class="btn btn-outline btn-sm reserve-btn" data-room="Signature Deluxe Room" data-price="$420">Reserve</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="field">
+          <label for="{{ booking_form.venue.id_for_label }}">Room</label>
+          {{ booking_form.venue }}
+          {{ booking_form.venue.errors }}
         </div>
+
+        <div class="field">
+          <label for="{{ booking_form.booking_date.id_for_label }}">Arrival date and time</label>
+          {{ booking_form.booking_date }}
+          {{ booking_form.booking_date.errors }}
+        </div>
+
+        <button class="button button-forest booking-submit" type="submit">
+          Check availability <span>→</span>
+        </button>
+        <small class="booking-hint">Sign in is required to complete a reservation.</small>
+      </form>
     </section>
 
-    <!-- AMENITIES SHOWCASE -->
-    <section class="section amenities-section bg-gray" id="amenities">
-        <div class="container">
-            <div class="section-header text-center">
-                <span class="section-tag">World-Class Facilities</span>
-                <h2 class="section-title">Indulge Your Senses</h2>
-                <p class="section-desc">Designed to rejuvenate body and mind with bespoke wellness and leisure experiences.</p>
-            </div>
-
-            <div class="amenities-container">
-                <div class="amenities-tabs" id="amenityTabs">
-                    <button class="amenity-tab active" data-target="amenity-spa">
-                        <i class="fa-solid fa-spa"></i>
-                        <div>
-                            <h4>The Aura Spa & Wellness</h4>
-                            <p>Holistic treatments & mineral thermal pools</p>
-                        </div>
-                    </button>
-                    <button class="amenity-tab" data-target="amenity-dining">
-                        <i class="fa-solid fa-utensils"></i>
-                        <div>
-                            <h4>Michelin-Starred Dining</h4>
-                            <p>Coastal gastronomy by Chef Laurent</p>
-                        </div>
-                    </button>
-                    <button class="amenity-tab" data-target="amenity-pool">
-                        <i class="fa-solid fa-water-ladder"></i>
-                        <div>
-                            <h4>Infinity Sky Pool</h4>
-                            <p>Heated saltwater overlooking the horizon</p>
-                        </div>
-                    </button>
-                    <button class="amenity-tab" data-target="amenity-concierge">
-                        <i class="fa-solid fa-key"></i>
-                        <div>
-                            <h4>24/7 Private Concierge</h4>
-                            <p>Helicopter transfers & bespoke itineraries</p>
-                        </div>
-                    </button>
-                </div>
-
-                <div class="amenities-display" id="amenityDisplay">
-                    <div class="amenity-panel active" id="amenity-spa">
-                        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1000&q=80" alt="Spa">
-                        <div class="amenity-caption">
-                            <h3>Restore Inner Equilibrium</h3>
-                            <p>Experience tailored massages utilizing organic botanicals, Himalayan salt chambers, and private steam grottos.</p>
-                        </div>
-                    </div>
-                    <div class="amenity-panel" id="amenity-dining">
-                        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=80" alt="Dining">
-                        <div class="amenity-caption">
-                            <h3>Culinary Excellence</h3>
-                            <p>Savor locally sourced seafood and rare vintage pairings in a stunning minimalist architectural pavilion.</p>
-                        </div>
-                    </div>
-                    <div class="amenity-panel" id="amenity-pool">
-                        <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1000&q=80" alt="Pool">
-                        <div class="amenity-caption">
-                            <h3>Floating on the Horizon</h3>
-                            <p>Our 25-meter cantilevered infinity pool merges seamlessly with the ocean blue, accompanied by private cabanas.</p>
-                        </div>
-                    </div>
-                    <div class="amenity-panel" id="amenity-concierge">
-                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80" alt="Concierge">
-                        <div class="amenity-caption">
-                            <h3>Absolute Discretion & Care</h3>
-                            <p>From private yacht charters to exclusive gallery access, our head concierge curates moments tailored exclusively to you.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="rooms-section section-wrap" id="rooms">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Rest among the trees</p>
+          <h2>Rooms shaped<br>by <em>the landscape.</em></h2>
         </div>
+        <p>
+          Explore the room types currently available at Luxious Hotel.
+          Select a room in the booking form to continue.
+        </p>
+      </div>
+
+      <div class="room-type-grid">
+        {% for group in room_groups %}
+          <article class="room-type-card">
+            <span class="room-symbol">✳</span>
+            <p class="room-kicker">ROOM COLLECTION</p>
+            <h3>{{ group.label }}</h3>
+            <p class="availability">{{ group.count }} available room{{ group.count|pluralize }}</p>
+            <a href="#booking">Choose a room <span>↗</span></a>
+          </article>
+        {% empty %}
+          <p class="empty-state">No rooms are currently available. Please check back soon.</p>
+        {% endfor %}
+      </div>
     </section>
 
-    <!-- SPECIAL OFFERS SECTION -->
-    <section class="section packages-section" id="packages">
-        <div class="container">
-            <div class="section-header text-center">
-                <span class="section-tag">Exclusive Privileges</span>
-                <h2 class="section-title">Special Packages & Offers</h2>
-                <p class="section-desc">Enhance your getaway with curated seasonal rates and complementary wellness perks.</p>
-            </div>
-
-            <div class="packages-grid">
-                <div class="package-card">
-                    <div class="package-badge">Extended Stay</div>
-                    <div class="package-content">
-                        <h3>Stay 4, Pay 3 Nights</h3>
-                        <p>Receive a complimentary fourth night when you book any luxury or ocean view suite for three consecutive evenings.</p>
-                        <ul class="package-perks">
-                            <li><i class="fa-solid fa-check"></i> Daily artisanal breakfast for two</li>
-                            <li><i class="fa-solid fa-check"></i> $100 spa credit included</li>
-                        </ul>
-                        <div class="promo-box">
-                            <span>Code: <strong>AURA4FOR3</strong></span>
-                            <button class="copy-btn" onclick="copyPromo('AURA4FOR3', this)"><i class="fa-regular fa-copy"></i> Copy</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="package-card">
-                    <div class="package-badge">Romance & Escape</div>
-                    <div class="package-content">
-                        <h3>Couples Seaside Retreat</h3>
-                        <p>Designed for intimate celebrations with champagne upon arrival, rose petal bath setup, and candlelit dinner.</p>
-                        <ul class="package-perks">
-                            <li><i class="fa-solid fa-check"></i> Bottle of Dom Pérignon on arrival</li>
-                            <li><i class="fa-solid fa-check"></i> 60-minute couples massage</li>
-                        </ul>
-                        <div class="promo-box">
-                            <span>Code: <strong>ROMANCE26</strong></span>
-                            <button class="copy-btn" onclick="copyPromo('ROMANCE26', this)"><i class="fa-regular fa-copy"></i> Copy</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="amenities-section" id="amenities">
+      <div class="amenities-photo" role="img" aria-label="A peaceful forest setting"></div>
+      <div class="amenities-copy">
+        <p class="eyebrow eyebrow-light">Grounded in nature</p>
+        <h2>Let the day<br>unfold <em>gently.</em></h2>
+        <p>
+          Find a peaceful corner, enjoy a slower morning and return to the
+          comfort of a thoughtfully appointed room.
+        </p>
+        <a class="light-link" href="#booking">Plan your visit <span>→</span></a>
+      </div>
     </section>
 
-    <!-- TESTIMONIALS SECTION -->
-    <section class="section testimonials-section bg-gray" id="testimonials">
-        <div class="container">
-            <div class="section-header text-center">
-                <span class="section-tag">Guest Experiences</span>
-                <h2 class="section-title">What Our Guests Say</h2>
-                <p class="section-desc">Reflections from discerning travelers who have experienced the Aura Grand standard.</p>
-            </div>
-
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"An absolute masterpiece of hospitality. The ocean suite was immaculate, and the staff anticipated every single request with absolute grace."</p>
-                    <div class="guest-info">
-                        <div class="guest-avatar">CH</div>
-                        <div>
-                            <h4>Charlotte Hamilton</h4>
-                            <span>Verified Traveler • Architectural Digest</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"The infinity pool at sunset is unforgettable. Dining at the coastal restaurant was easily one of the culinary highlights of our year."</p>
-                    <div class="guest-info">
-                        <div class="guest-avatar">MR</div>
-                        <div>
-                            <h4>Marcus Vance</h4>
-                            <span>Verified Guest • Venture Capitalist</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="offer-section" id="offers">
+      <p class="eyebrow">A reason to linger</p>
+      <h2>Make space for<br><em>something restorative.</em></h2>
+      <p>Choose an available room and arrival date to start planning your stay.</p>
+      <a class="button button-forest" href="#booking">Explore availability <span>↗</span></a>
     </section>
+  </main>
 
-    <!-- NEWSLETTER / FOOTER CTA -->
-    <section class="newsletter-section">
-        <div class="container text-center">
-            <h2>Join The Aura Privilege Circle</h2>
-            <p>Subscribe to receive private seasonal offerings, member-only architectural releases, and invitations.</p>
-            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to Aura Grand.');">
-                <input type="email" placeholder="Enter your email address" required>
-                <button type="submit" class="btn btn-primary">Subscribe</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container footer-grid">
-            <div class="footer-col">
-                <a href="#" class="logo">
-                    <span class="logo-mark">AG</span>
-                    <span class="logo-text">AURA GRAND</span>
-                </a>
-                <p class="footer-desc">Redefining modern luxury hospitality through sublime architectural design, intuitive service, and tranquil coastal sanctuaries.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>Sanctuaries</h4>
-                <ul>
-                    <li><a href="#">Malibu Coast Resort</a></li>
-                    <li><a href="#">New York Sky Tower</a></li>
-                    <li><a href="#">Kyoto Zen Sanctuary</a></li>
-                    <li><a href="#">Swiss Alps Chalet</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#suites">Suites & Rooms</a></li>
-                    <li><a href="#amenities">Wellness & Spa</a></li>
-                    <li><a href="#packages">Special Privileges</a></li>
-                    <li><a href="#testimonials">Guest Reviews</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Concierge Office</h4>
-                <p><i class="fa-solid fa-location-dot"></i> 450 Ocean Promenade, Malibu, CA</p>
-                <p><i class="fa-solid fa-phone"></i> +1 (800) 492-8833</p>
-                <p><i class="fa-solid fa-envelope"></i> concierge@auragrand.com</p>
-            </div>
-        </div>
-        <div class="container footer-bottom">
-            <p>&copy; 2026 Aura Grand Hotel & Suites. All rights reserved.</p>
-            <div class="legal-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Cookie Preferences</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- RESERVE MODAL -->
-    <div class="modal-backdrop" id="reserveModal">
-        <div class="modal-card">
-            <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-header">
-                <span class="section-tag">Instant Reservation</span>
-                <h3 id="modalRoomTitle">Reserve Sanctuary</h3>
-                <p id="modalRoomPrice" class="modal-price-display"></p>
-            </div>
-            <form class="modal-form" id="reservationForm">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" class="booking-input" placeholder="Charlotte Hamilton" required>
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" class="booking-input" placeholder="charlotte@example.com" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Check-in</label>
-                        <input type="date" class="booking-input" id="modalCheckIn" value="2026-06-01" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Check-out</label>
-                        <input type="date" class="booking-input" id="modalCheckOut" value="2026-06-07" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Special Preferences or Requests</label>
-                    <textarea class="booking-input" rows="3" placeholder="High floor, quiet wing, dietary requirements..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Confirm Reservation</button>
-            </form>
-        </div>
+  <footer class="site-footer">
+    <a class="brand brand-footer" href="{% url 'landing' %}">
+      <span class="brand-mark">L</span>
+      <span class="brand-name">LUXIOUS <small>HOTEL</small></span>
+    </a>
+    <span>Modern comfort, rooted in nature.</span>
+    <div class="footer-links">
+      <a href="{% url 'signup' %}">Create an account</a>
+      <a href="{% url 'login' %}">Sign in</a>
+      <a href="#experience">Back to top ↑</a>
     </div>
-
-    <!-- SCRIPT LINK -->
-    <script src="{% static 'JSFile/main.js' %}"></script>
+  </footer>
 </body>
 </html>

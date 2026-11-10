@@ -254,3 +254,25 @@ a {
     font-size: 0.8rem;
     color: var(--text-muted);
 }
+
+.form-errors,
+.errorlist {
+  color: #9b3028;
+  font-size: 13px;
+}
+
+.form-message {
+  margin: 12px 0;
+  padding: 12px 14px;
+  font-size: 13px;
+}
+
+.form-message.success {
+  color: #183a2d;
+  background: #e9f1e8;
+}
+
+.form-message.error {
+  color: #8d2923;
+  background: #fae9e7;
+}
