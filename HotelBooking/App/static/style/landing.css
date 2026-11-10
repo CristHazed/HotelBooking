@@ -1107,3 +1107,20 @@ textarea.booking-input {
         justify-content: center;
     }
 }
+
+.booking-form select,
+.booking-form input[type="datetime-local"],
+.booking-form .form-input {
+    display: block !important;
+    width: 100% !important;
+    height: 42px !important;
+    padding: 8px 12px !important;
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    color: #1e293b !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+    margin-top: 6px !important;
+    margin-bottom: 12px !important;
+}

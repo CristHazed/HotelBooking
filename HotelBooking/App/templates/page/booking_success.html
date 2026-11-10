@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Confirmed - Finance Bread</title>
+</head>
+<body style="font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f4f9;">
+    <div style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 400px; text-align: center;">
+        
+        <h2 style="color: #28a745; margin-top: 0;">Reservation Confirmed! 🎉</h2>
+        <p style="color: #666; font-size: 14px;">Thank you, your booking has been successfully processed.</p>
+        
+        <div style="text-align: left; background: #f8f9fa; padding: 15px; border-radius: 6px; margin: 20px 0; font-size: 14px;">
+            <p><strong>Full Name:</strong> {{ request.user.userprofile.fullname }}</p>
+            <p><strong>Email:</strong> {{ request.user.userprofile.email }}</p>
+            <hr style="border: 0; border-top: 1px solid #ddd; margin: 10px 0;">
+            <p><strong>Selected Venue/Room:</strong> {{ booking.venue.name }}</p>
+            <p><strong>Capacity:</strong> {{ booking.venue.capacity }} guests</p>
+            <p><strong>Date & Time:</strong> {{ booking.booking_date|date:"F j, Y, g:i a" }}</p>
+            <p><strong>Status:</strong> <span style="color: green; font-weight: bold;">{{ booking.status }}</span></p>
+        </div>
+
+        <a href="{% url 'book_venue' %}" style="display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;">
+            Make Another Booking
+        </a>
+        <a href="{% url 'book_venue' %}" style="display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;">
+            View Booking Receipt
+        </a>
+    </div>
+</body>
+</html>

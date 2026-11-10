@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import UserProfile
+from .models import UserProfile, Booking
 
 class CustomSignUpForm(UserCreationForm):
     # Add fields for your UserProfile model with custom widget attributes
@@ -29,3 +29,12 @@ class CustomSignUpForm(UserCreationForm):
                 email=self.cleaned_data['email']
             )
         return user
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['venue', 'booking_date']
+        widgets = {
+            'venue': forms.Select(attrs={'class': 'form-input'}),
+            'booking_date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-input'}),
+        }

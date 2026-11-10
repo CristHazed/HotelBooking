@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'style/landing.css' %}"> <!-- Or your main css file -->
+    <style>
+        body { font-family: sans-serif; background: #f8fafc; padding: 20px; color: #334155; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h1, h2 { color: #0f172a; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; text-align: left; font-size: 14px; }
+        th { background: #f1f5f9; font-weight: 600; }
+        .btn-action { padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 12px; }
+        .btn-action:hover { background: #2563eb; }
+        .badge-available { color: #16a34a; font-weight: bold; }
+        .badge-booked { color: #dc2626; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ Custom Management Dashboard</h1>
+        <p>Welcome, {{ request.user.username }}. Manage your hotel users, rooms, and reservations below.</p>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+
+        <!-- USERS SECTION -->
+        <h2>Registered Users & Profiles</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Email Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profile in profiles %}
+                <tr>
+                    <td>{{ profile.user.username }}</td>
+                    <td>{{ profile.fullname }}</td>
+                    <td>{{ profile.email }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3">No user profiles found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- ROOMS SECTION -->
+        <h2>Rooms & Venues</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Room Name</th>
+                    <th>Capacity</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                <tr>
+                    <td>{{ room.name }}</td>
+                    <td>{{ room.capacity }} Guests</td>
+                    <td>
+                        {% if room.is_available %}
+                            <span class="badge-available">Available</span>
+                        {% else %}
+                            <span class="badge-booked">Booked</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'toggle_room' room.id %}" class="btn-action">Toggle Status</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No rooms added yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- BOOKINGS SECTION -->
+        <h2>Active Bookings</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Room Booked</th>
+                    <th>Date & Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.venue.name }}</td>
+                    <td>{{ booking.booking_date|date:"F j, Y, g:i a" }}</td>
+                    <td>{{ booking.status }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No active bookings found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'book_venue' %}" style="color: #3b82f6; text-decoration: none; font-weight: 500;">&larr; Back to Booking Page</a>
+    </div>
+</body>
+</html>
