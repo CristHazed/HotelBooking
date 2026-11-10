@@ -52,3 +52,21 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"[{self.reservation_number}] {self.user.username} booked {self.venue.name}"
+      
+      
+# EXCEPTIONS
+class InvalidRoomSelectionError(Exception):
+    pass
+
+class InvalidStayDurationError(Exception):
+    pass
+
+class OccupiedRoomBookingError(Exception):
+    pass
+
+# GUEST MODEL
+class Guest:
+    def __init__(self, name):
+        if not name or not name.strip():
+            raise ValueError("Guest name cannot be empty.")
+        self.name = name.strip()
