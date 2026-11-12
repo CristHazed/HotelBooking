@@ -51,11 +51,11 @@ class Room(models.Model):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
         return self.base_rate * stay_duration
-    
+
 class StandardRoom(Room):
     class Meta:
         proxy = True
-            
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.extra_guest_fee = Decimal('50.00')
@@ -63,7 +63,7 @@ class StandardRoom(Room):
             self.room_type = 'Standard'
             if self.capacity is None:
                 self.capacity = 2
-        
+
     def calculate_StandardRate(self, stay_duration, guest_count):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
