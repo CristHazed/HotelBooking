@@ -140,6 +140,16 @@ def create_booking_view(request):
 def booking_success_view(request):
     return render(request, 'page/booking_success.html')
 
+# My Bookings Template
+@login_required
+def my_bookings_view(request):
+    user_bookings = Booking.objects.filter(user=request.user)
+
+    context = {
+        'recent_bookings': user_bookings,
+    }
+    return render(request, 'page/my_bookings.html', context)
+
 # Renders receipt or confirmation and the ref number
 @login_required
 def receipt(request, reservation_number):

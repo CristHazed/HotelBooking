@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxious Hotel - My Bookings</title>
+    <link rel="stylesheet" href="{% static 'style/my_bookings.css' %}">
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Organized Luxury Card Grid Styles */
+        .rooms-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+            gap: 24px !important;
+            margin-top: 20px !important;
+        }
+
+        .room-card {
+            background: #ffffff !important;
+            border-radius: 10px !important;
+            padding: 24px !important;
+            box-shadow: 0 6px 18px rgba(13, 35, 26, 0.05) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            border: 1px solid #eae5d5 !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .room-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(13, 35, 26, 0.08) !important;
+        }
+
+        .card-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .room-title {
+            font-family: 'Cormorant Garamond', serif !important;
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            color: #0d231a !important;
+            line-height: 1.2;
+        }
+
+        .booking-ref {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #c5a059;
+            background: rgba(197, 160, 89, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .card-body-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-top: 1px solid #f7f4eb;
+            border-bottom: 1px solid #f7f4eb;
+            padding: 14px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13.5px;
+            color: #5c756b;
+        }
+
+        .detail-row i {
+            width: 16px;
+            color: #c5a059;
+            text-align: center;
+        }
+
+        .room-footer {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding-top: 4px !important;
+        }
+
+        .badge-available { 
+            color: #2e7d32 !important; 
+            font-weight: 600 !important; 
+            font-size: 12px !important;
+            background: rgba(46, 125, 50, 0.08) !important;
+            padding: 5px 12px !important;
+            border-radius: 4px !important;
+        }
+
+        .badge-booked { 
+            color: #c62828 !important; 
+            font-weight: 600 !important; 
+            font-size: 12px !important;
+            background: rgba(198, 40, 40, 0.08) !important;
+            padding: 5px 12px !important;
+            border-radius: 4px !important;
+        }
+
+        .btn-receipt {
+            background: transparent;
+            border: 1px solid #0d231a;
+            color: #0d231a;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-receipt:hover {
+            background: #0d231a;
+            color: #ffffff;
+        }
+    </style>
+    <script src="{% static 'JSFile/my_bookings.js' %}" defer></script>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-mark">L</div>
+                <div class="brand-text">
+                    <h1>LUXIOUS</h1>
+                    <p>HOTEL</p>
+                </div>
+            </div>
+
+            <div class="nav-section-title">YOUR SPACE</div>
+            <nav class="nav-links">
+                <a href="{% url 'homepage' %}" class="nav-item"><i class="fa-regular fa-compass"></i> Overview</a>
+                <a href="{% url 'my_bookings' %}" class="nav-item active"><i class="fa-regular fa-plus"></i> My Bookings</a>
+                <a href="{% url 'landing' %}#rooms" class="nav-item"><i class="fa-regular fa-newspaper"></i> Explore rooms</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-avatar-small">{{ request.user.username|slice:":1"|upper }}</div>
+                <div class="user-info-small">
+                    <span class="username">{{ request.user.username }}</span>
+                    <span class="user-status">Guest Tier</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-breadcrumb">
+                    <span>LUXIOUS HOTEL</span> • <span>GUEST DASHBOARD</span>
+                    <h2>Your active stays and reservation history.</h2>
+                </div>
+                <div class="header-profile">
+                    <span class="notification-badge"><i class="fa-regular fa-bell"></i></span>
+                    <div class="profile-pill">
+                        <div class="avatar">{{ request.user.username|slice:":1"|upper }}</div>
+                        <span class="profile-name">{{ request.user.username }}</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Bookings Overview Banner -->
+            <section class="welcome-banner">
+                <div class="banner-text">
+                    <span class="sub-tag">RESERVATION MANAGEMENT</span>
+                    <h1>Your Bookings, <span class="italic">Managed.</span></h1>
+                    <p>Review upcoming itineraries, inspect digital receipts, or modify plans seamlessly.</p>
+                </div>
+                <a href="{% url 'landing' %}#rooms" class="plan-btn">Plan new stay <i class="fa-solid fa-arrow-right"></i></a>
+            </section>
+
+            <!-- Filter Tabs -->
+            <div class="tabs-container">
+                <button class="tab-btn active" data-filter="all">All Bookings (<span id="count-all">{{ recent_bookings|length }}</span>)</button>
+                <button class="tab-btn" data-filter="upcoming">Upcoming</button>
+                <button class="tab-btn" data-filter="completed">Completed</button>
+                <button class="tab-btn" data-filter="cancelled">Cancelled</button>
+            </div>
+
+            <!-- Bookings Grid Container -->
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #0d231a; margin-top: 10px;">Rooms & Venues</h2>
+            
+            <div class="rooms-grid">
+                {% for booking in recent_bookings %}
+                <div class="room-card" data-status="{{ booking.status|lower }}">
+                    <div>
+                        <!-- Card Header with Title and Ref Number -->
+                        <div class="card-header-flex">
+                            <div class="room-title">{{ booking.venue.name }}</div>
+                            <span class="booking-ref">Ref #{{ booking.id }}</span>
+                        </div>
+
+                        <!-- Organized Details Section -->
+                        <div class="card-body-details">
+                            <div class="detail-row">
+                                <i class="fa-regular fa-user"></i>
+                                <span>Guest: <strong>{{ request.user.username }}</strong></span>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fa-regular fa-users"></i>
+                                <span>Capacity: <strong>{{ booking.venue.capacity }} Guests</strong></span>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fa-regular fa-calendar"></i>
+                                <span>Date: <strong>{{ booking.booking_date|date:"F j, Y" }}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer with Status & Action -->
+                    <div class="room-footer">
+                        <div>
+                            {% if booking.status == "Confirmed" or booking.status == "Upcoming" %}
+                                <span class="badge-available"><i class="fa-solid fa-check"></i> Booked</span>
+                            {% elif booking.status == "Completed" %}
+                                <span class="badge-booked" style="color: #5c756b; background: rgba(92,117,107,0.1);">Completed</span>
+                            {% else %}
+                                <span class="badge-booked">Cancelled</span>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'confirmation' booking.reservation_number %}" class="btn-receipt">Receipt</a>
+                    </div>
+                </div>
+                {% empty %}
+                <div style="grid-column: 1 / -1; background: #ffffff; padding: 40px; border-radius: 10px; text-align: center; color: #5c756b; border: 1px solid #eae5d5;">
+                    <i class="fa-regular fa-folder-open" style="font-size: 28px; color: #c5a059; margin-bottom: 10px; display: block;"></i>
+                    No bookings found for your account.
+                </div>
+                {% endfor %}
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>

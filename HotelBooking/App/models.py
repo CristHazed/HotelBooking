@@ -44,6 +44,7 @@ class Room(models.Model):
     def __str__(self):
         status = "Available" if self.is_available else "Booked"
         return f"{self.name} (Capacity: {self.capacity}) - [{status}]"
+    
 
 # Booking Structure / Booking Handler
 class Booking(models.Model):

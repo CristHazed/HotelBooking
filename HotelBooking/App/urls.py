@@ -13,4 +13,5 @@ urlpatterns = [
     path('my-admin/', views.custom_admin_dashboard, name='custom_admin'),
     path('my-admin/room/<int:room_id>/toggle/', views.toggle_room_status, name='toggle_room'),
     path('verify/', views.verify_reservation_view, name='verify_reservation'),
+    path('my_bookings/', views.my_bookings_view, name="my_bookings")
 ]
