@@ -114,6 +114,7 @@ def homepage(request):
     }
     return render(request, "page/home.html", context)
 
+
 @login_required
 def create_booking_view(request):
     if request.method == 'POST':

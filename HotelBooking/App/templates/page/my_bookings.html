@@ -215,11 +215,15 @@
                             </div>
                             <div class="detail-row">
                                 <i class="fa-regular fa-users"></i>
-                                <span>Capacity: <strong>{{ booking.venue.capacity }} Guests</strong></span>
+                                <span>Capacity: <strong>{{ booking.venue.capacity }}</strong></span>
                             </div>
                             <div class="detail-row">
                                 <i class="fa-regular fa-calendar"></i>
-                                <span>Date: <strong>{{ booking.booking_date|date:"F j, Y" }}</strong></span>
+                                <span>Booking Date: <strong>{{ booking.booking_date|date:"F j, Y" }}</strong></span>
+                            </div>
+                            <div class="detail-row">
+                                <i class="fa-regular fa-calendar"></i>
+                                <span>Checkout Date: <strong>{{ booking.checkout_date|date:"F j, Y" }}</strong></span>
                             </div>
                         </div>
                     </div>
@@ -227,13 +231,7 @@
                     <!-- Card Footer with Status & Action -->
                     <div class="room-footer">
                         <div>
-                            {% if booking.status == "Confirmed" or booking.status == "Upcoming" %}
-                                <span class="badge-available"><i class="fa-solid fa-check"></i> Booked</span>
-                            {% elif booking.status == "Completed" %}
-                                <span class="badge-booked" style="color: #5c756b; background: rgba(92,117,107,0.1);">Completed</span>
-                            {% else %}
-                                <span class="badge-booked">Cancelled</span>
-                            {% endif %}
+                            <span class="badge-available"><i class="fa-solid fa-check"></i>{{ booking.current_status }}</span>
                         </div>
                         <a href="{% url 'confirmation' booking.reservation_number %}" class="btn-receipt">Receipt</a>
                     </div>

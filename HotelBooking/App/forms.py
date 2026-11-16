@@ -36,8 +36,10 @@ class CustomSignUpForm(UserCreationForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['venue', 'booking_date']
+        fields = ['venue', 'booking_date', 'checkout_date']
         widgets = {
             'venue': forms.Select(attrs={'class': 'form-input'}),
             'booking_date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-input'}),
+            'checkout_date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-input'}),
+            'itineraries': forms.CheckboxSelectMultiple(),
         }

@@ -1,4 +1,7 @@
 import uuid
+from decimal import Decimal
+from django.utils import timezone
+from datetime import timedelta
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -26,7 +29,9 @@ class Room(models.Model):
     name = models.CharField(max_length=150)                                             # Name of the Room / Room Number
     room_type = models.CharField(max_length=50, choices=ROOM_TYPES, default='Standard') # ROOM_TYPES
     capacity = models.IntegerField()                                                    # Capacity (1-4)
-    is_available = models.BooleanField(default=True)                                    #  Room availability
+    is_available = models.BooleanField(default=True)                                    # Room availability
+    price_per_night = models.IntegerField(default=0)                                    # Room Price
+    room_description = models.TextField(max_length=5000, default='Failed to load description') # Room Description
 
     # Books the rooms
     def book(self):
@@ -44,6 +49,99 @@ class Room(models.Model):
     def __str__(self):
         status = "Available" if self.is_available else "Booked"
         return f"{self.name} (Capacity: {self.capacity}) - [{status}]"
+
+class StandardRoom(Room):
+    class Meta:
+        proxy = True
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.extra_guest_fee = Decimal('300.00')
+        if not self.pk:
+            self.room_type = 'Standard'
+            if self.capacity is None:
+                self.capacity = 2
+
+    def calculate_StandardRate(self, stay_duration, guest_count):
+        if stay_duration <= 0:
+            raise ValueError("Stay duration must be greater than 0")
+        total_rate = self.base_rate * stay_duration
+        if guest_count > self.capacity:
+            extra_guests = guest_count - self.capacity
+            total_rate += extra_guests * self.extra_guest_fee
+        return total_rate
+    
+class DeluxeRoom(Room):
+    class Meta:
+        proxy = True
+            
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.extra_guest_fee = Decimal('75.00')
+        if not self.pk:
+            self.room_type = 'Deluxe'
+            if self.capacity is None:
+                self.capacity = 3
+        
+    def calculate_DeluxeRate(self, stay_duration, guest_count):
+        if stay_duration <= 0:
+            raise ValueError("Stay duration must be greater than 0")
+        total_rate = self.base_rate * stay_duration
+        if guest_count > self.capacity:
+            extra_guests = guest_count - self.capacity
+            total_rate += extra_guests * self.extra_guest_fee
+        return total_rate
+    
+class VIPRoom(Room):
+    class Meta:
+        proxy = True
+            
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.extra_guest_fee = Decimal('100.00')
+        if not self.pk:
+            self.room_type = 'VIP'
+            if self.capacity is None:
+                self.capacity = 4
+        
+    def calculate_VIPRate(self, stay_duration, guest_count):
+        if stay_duration <= 0:
+            raise ValueError("Stay duration must be greater than 0")
+        total_rate = self.base_rate * stay_duration
+        if guest_count > self.capacity:
+            extra_guests = guest_count - self.capacity
+            total_rate += extra_guests * self.extra_guest_fee
+        return total_rate
+    
+class DeluxePlusRoom(Room):
+    class Meta:
+        proxy = True
+            
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.extra_guest_fee = Decimal('125.00')
+        if not self.pk:
+            self.room_type = 'Deluxe Plus'
+            if self.capacity is None:
+                self.capacity = 5
+        
+    def calculate_DeluxePlusRate(self, stay_duration, guest_count):
+        if stay_duration <= 0:
+            raise ValueError("Stay duration must be greater than 0")
+        total_rate = self.base_rate * stay_duration
+        if guest_count > self.capacity:
+            extra_guests = guest_count - self.capacity
+            total_rate += extra_guests * self.extra_guest_fee
+        return total_rate
+
+
+class Itinerarie(models.Model):
+    itinerary_name = models.CharField(max_length=50)
+    price = models.IntegerField(default=0)
+    itinerary_description = models.TextField(max_length=1000)
+
+    def __str__(self):
+            return self.itinerary_name
     
 
 # Booking Structure / Booking Handler
@@ -52,8 +150,10 @@ class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)                        # Tracks the current active / logged in user
     venue = models.ForeignKey(Room, on_delete=models.CASCADE)                       # Selects the room info the user chose
     booking_date = models.DateTimeField()                                           # The reservation date selected by user
+    checkout_date = models.DateTimeField()                                          # Check_out date selected by user
     status = models.CharField(max_length=50, default='Confirmed')                   # Status of the booking
     created_at = models.DateTimeField(auto_now_add=True)                            # Uploads when the booking was created
+    itineraries = models.ManyToManyField(Itinerarie,blank=True)
 
     # Custom save function to save ref number or reservation number
     def save(self, *args, **kwargs):
@@ -68,9 +168,40 @@ class Booking(models.Model):
         self.venue.release()        # release() is taken from Room object
         self.save()
 
+    @property
+    def total_price(self):
+        nights = max(
+            (self.checkout_date.date() - self.booking_date.date()).days,
+            0,
+        )
+        room_cost = self.venue.price_per_night * nights
+        itinerary_cost = sum(
+            selection.itinerary.price * selection.participant_count
+            for selection in self.itinerary_selections.all()
+        )
+        return room_cost + itinerary_cost
+
+    @property
+    def current_status(self):
+        now = timezone.now()
+        
+        # If already completed or cancelled, keep that status
+        if self.status.lower() in ['Completed', 'Cancelled']:
+            return self.status
+            
+        # If the checkout time has passed -> Completed
+        if now > self.checkout_date:
+            return 'Completed'
+            
+        # If booking date is within the next 24 hours or now -> Upcoming
+        elif now <= self.booking_date <= (now + timedelta(hours=24)):
+            return 'Upcoming'
+            
+        # default back to Confirmed
+        return self.status
+
     def __str__(self):
         return f"[{self.reservation_number}] {self.user.username} booked {self.venue.name}"
-      
       
 # EXCEPTIONS
 class InvalidRoomSelectionError(Exception):

@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from .models import Room, Booking, UserProfile
+from .models import Room, Booking, UserProfile, Itinerarie
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
@@ -11,3 +11,4 @@ class RoomAdmin(admin.ModelAdmin):
 
 admin.site.register(Booking)
 admin.site.register(UserProfile)
+admin.site.register(Itinerarie)

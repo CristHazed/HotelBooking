@@ -51,6 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'HotelBooking.urls'
+LOGOUT_REDIRECT_URL ='/'
 
 TEMPLATES = [
     {

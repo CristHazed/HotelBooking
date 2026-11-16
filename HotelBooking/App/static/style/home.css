@@ -125,3 +125,13 @@ td small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px;
   .panel-heading h2 { font-size: 21px; }
   .page-footer { flex-direction: column; }
 }
+
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}

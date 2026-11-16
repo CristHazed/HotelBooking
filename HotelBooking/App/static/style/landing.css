@@ -156,3 +156,28 @@ button, input, select { font: inherit; }
   .site-footer { flex-direction: column; text-align: center; }
   .footer-links { flex-wrap: wrap; justify-content: center; }
 }
+
+.profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #202820;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 90px;
+}
+
+.profile-initial {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #eeede4;
+  color: #183a2d;
+  font: 18px "Playfair Display", Georgia, serif;
+}
+
+.profile-link:hover {
+  color: #77866c;
+}
