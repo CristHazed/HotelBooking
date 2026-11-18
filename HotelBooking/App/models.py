@@ -1,7 +1,7 @@
 import uuid
 from decimal import Decimal
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta, datetime, time
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -26,12 +26,12 @@ class Room(models.Model):
         ('VIP', 'Important Guess'),
         ('Deluxe Plus', 'Delux Capacity')
     ]
-    name = models.CharField(max_length=150)                                             # Name of the Room / Room Number
-    room_type = models.CharField(max_length=50, choices=ROOM_TYPES, default='Standard') # ROOM_TYPES
-    capacity = models.IntegerField()                                                    # Capacity (1-4)
-    is_available = models.BooleanField(default=True)                                    # Room availability
-    price_per_night = models.IntegerField(default=0)                                    # Room Price
-    room_description = models.TextField(max_length=5000, default='Failed to load description') # Room Description
+    name = models.CharField(max_length=150)                                                     # Name of the Room / Room Number
+    room_type = models.CharField(max_length=50, choices=ROOM_TYPES, default='Standard')         # ROOM_TYPES
+    capacity = models.IntegerField()                                                            # Capacity (1-4)
+    is_available = models.BooleanField(default=True)                                            # Room availability
+    price_per_night = models.IntegerField(default=0)                                            # Room Price
+    room_description = models.TextField(max_length=5000, default='Failed to load description')  # Room Description
 
     # Books the rooms
     def book(self):
@@ -48,7 +48,7 @@ class Room(models.Model):
 
     def __str__(self):
         status = "Available" if self.is_available else "Booked"
-        return f"{self.name} (Capacity: {self.capacity}) - [{status}]"
+        return f"{self.name} (Capacity: {self.capacity}) : [{status}]"
 
 class StandardRoom(Room):
     class Meta:
@@ -60,16 +60,15 @@ class StandardRoom(Room):
         if not self.pk:
             self.room_type = 'Standard'
             if self.capacity is None:
-                self.capacity = 2
+                self.capacity = 1
 
-    def calculate_StandardRate(self, stay_duration, guest_count):
+    def calculate_StandardRate(self, stay_duration):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
         total_rate = self.base_rate * stay_duration
-        if guest_count > self.capacity:
-            extra_guests = guest_count - self.capacity
-            total_rate += extra_guests * self.extra_guest_fee
-        return total_rate
+        if self.guess > self.capacity:
+            room_total = (self.guess_count * self.extra_guest_fee) + total_rate
+        return room_total
     
 class DeluxeRoom(Room):
     class Meta:
@@ -136,12 +135,21 @@ class DeluxePlusRoom(Room):
 
 
 class Itinerarie(models.Model):
+    ITINERARIES_TYPE = [
+            ('OUTDOOR & ADVENTURE PACKS', 'Adventure'),
+            ('WELLNESS & HYDRO-SPA PACKS', 'Wellness'),
+            ('DINING & CULINARY ADD-ONS', 'Dining'),
+            ('ENTERTAINMENT & LEISURE PASSES', 'Leisure')
+        ]
+    Itineraries_type = models.CharField(max_length=50, choices=ITINERARIES_TYPE, default='None')
     itinerary_name = models.CharField(max_length=50)
     price = models.IntegerField(default=0)
-    itinerary_description = models.TextField(max_length=1000)
+    participant_count = models.IntegerField(default=1)
+    itinerary_description = models.TextField(max_length=5000)
 
     def __str__(self):
             return self.itinerary_name
+
     
 
 # Booking Structure / Booking Handler
@@ -154,12 +162,23 @@ class Booking(models.Model):
     status = models.CharField(max_length=50, default='Confirmed')                   # Status of the booking
     created_at = models.DateTimeField(auto_now_add=True)                            # Uploads when the booking was created
     itineraries = models.ManyToManyField(Itinerarie,blank=True)
+    guess_count = models.IntegerField(default=0)
+    extra_guess_fee = models.IntegerField(default=500)
 
     # Custom save function to save ref number or reservation number
     def save(self, *args, **kwargs):
         if not self.reservation_number:
             unique_code = uuid.uuid4().hex[:8].upper()
             self.reservation_number = f"RES-{unique_code}"
+
+        # saves the booking and checkout date and defaults the time to standard 11pm checkout and 2pm checkin
+        if self.booking_date:
+            if not isinstance(self.booking_date, datetime):
+                self.booking_date = datetime.combine(self.booking_date, time(14, 0, 0))
+
+        if self.checkout_date:
+            if not isinstance(self.checkout_date, datetime):
+                self.checkout_date = datetime.combine(self.checkout_date, time(11, 0, 0))
         super().save(*args, **kwargs)
 
     # Function if cancellation is requested
@@ -168,36 +187,36 @@ class Booking(models.Model):
         self.venue.release()        # release() is taken from Room object
         self.save()
 
+    # Calculate total for whole booking
     @property
-    def total_price(self):
-        nights = max(
-            (self.checkout_date.date() - self.booking_date.date()).days,
-            0,
+    def total_cost(self):
+        stay_duration = max(
+            (self.checkout_date.date() - self.booking_date.date()).days, 0,
         )
-        room_cost = self.venue.price_per_night * nights
-        itinerary_cost = sum(
-            selection.itinerary.price * selection.participant_count
-            for selection in self.itinerary_selections.all()
-        )
-        return room_cost + itinerary_cost
+        if stay_duration <= 0:
+            raise ValueError("Stay duration must be greater than 0")
+        room_cost = self.venue.price_per_night * stay_duration
+        if self.extra_guess_fee > 0:
+            room_total = (self.guess_count * self.extra_guess_fee) + room_cost 
+        else:
+            room_total = room_cost
+        itineraries_total = sum(itinerary.price for itinerary in self.itineraries.all())
+        total_booking_cost = room_total + itineraries_total
+        return total_booking_cost
 
     @property
     def current_status(self):
-        now = timezone.now()
-        
-        # If already completed or cancelled, keep that status
+        today = timezone.localdate()
+
         if self.status.lower() in ['Completed', 'Cancelled']:
             return self.status
-            
-        # If the checkout time has passed -> Completed
-        if now > self.checkout_date:
+
+        if today > self.checkout_date.date():
             return 'Completed'
-            
-        # If booking date is within the next 24 hours or now -> Upcoming
-        elif now <= self.booking_date <= (now + timedelta(hours=24)):
+
+        elif self.booking_date.date() == today or (self.booking_date.date() - today).days <= 1:
             return 'Upcoming'
-            
-        # default back to Confirmed
+
         return self.status
 
     def __str__(self):
