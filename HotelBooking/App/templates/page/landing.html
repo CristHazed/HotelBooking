@@ -98,6 +98,18 @@
           {{ booking_form.checkout_date.errors }}
         </div>
 
+        <div class="field">
+          <label for="{{ booking_form.guess_count.id_for_label }}">Guess Count</label>
+          {{ booking_form.guess_count }}
+          {{ booking_form.guess_count.errors }}
+        </div>
+
+        <div class="field">
+          {{ booking_form.itineraries.label_tag }}
+          {{ booking_form.itineraries }}
+          {{ booking_form.itineraries.errors }}
+        </div>
+
         <button class="button button-forest booking-submit" type="submit">
           Check availability <span>→</span>
         </button>

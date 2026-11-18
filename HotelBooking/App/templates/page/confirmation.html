@@ -63,6 +63,18 @@
             <span>{{ booking.booking_date|date:"F j, Y, g:i a" }}</span>
         </div>
         <div class="details-group">
+            <span>Check-out / Date:</span>
+            <span>{{ booking.checkout_date |date:"F j, Y, g:i a" }}</span>
+        </div>
+        <div class="details-group">
+            <span>Extra Guess Count:</span>
+            <span>{{ booking.guess_count }}</span>
+        </div>
+        <div class="details-group">
+            <span>Total Booking Cost:</span>
+            <span>{{ booking.total_cost }}</span>
+        </div>
+        <div class="details-group">
             <span>Status:</span>
             <span style="color: #16a34a;">{{ booking.status }}</span>
         </div>
