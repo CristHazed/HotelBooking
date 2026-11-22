@@ -1,0 +1,472 @@
+/* Lushiux Hotel: global styles. Every page extends base.html, which loads this. */
+
+:root {
+  --sage: #D9E3CD;     /* page background */
+  --forest: #1D2B22;   /* text, hero */
+  --green: #3A4A2F;    /* buttons, links */
+  --tan: #B8A77A;      /* accents on dark */
+  --olive: #6F6A3B;    /* dividers, details */
+  --brown: #5A3B26;    /* nav line, footer */
+  --white: #FFFFFF;
+  --ivory: #F6F3EA;        /* text on the green page */
+  --muted-light: #C9D0BC;  /* soft text on the green page */
+  --link-light: #D8CBA0;   /* links on the green page */
+  --chip: #E8E6D6;
+  --line: #C9D0BC;
+  --muted: #5B6354;
+  --ok-bg: #DDEEDF;  --ok-fg: #1F5C33;
+  --bad-bg: #F3D6D2; --bad-fg: #8A1F17;
+  --radius: 14px;
+  --font-head: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--green);
+  color: var(--ivory);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 0.5em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+}
+
+h2 {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--link-light);
+}
+
+:focus-visible {
+  outline: 3px solid var(--tan);
+  outline-offset: 2px;
+}
+
+.muted {
+  color: var(--muted-light);
+}
+
+/* ---------- NAVIGATION ---------- */
+.site-header {
+  background: var(--white);
+  border-bottom: 3px solid var(--brown);
+}
+
+.nav-bar {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--forest);
+  font-family: var(--font-head);
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.brand img {
+  height: 40px;
+  width: auto;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.site-nav a,
+.link-button {
+  color: var(--forest);
+  text-decoration: none;
+  font-size: 0.95rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.site-nav a:hover,
+.link-button:hover {
+  color: var(--olive);
+}
+
+.site-nav a[aria-current="page"] {
+  border-bottom: 2px solid var(--olive);
+}
+
+.site-nav .nav-cta {
+  background: var(--green);
+  color: var(--white);
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.site-nav .nav-cta:hover {
+  color: var(--white);
+  background: var(--forest);
+}
+
+.nav-user {
+  color: var(--olive);
+  font-size: 0.95rem;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font: inherit;
+  cursor: pointer;
+  color: var(--forest);
+}
+
+/* ---------- BUTTONS ---------- */
+.btn {
+  display: inline-block;
+  padding: 11px 22px;
+  border-radius: 8px;
+  border: 1px solid var(--green);
+  font: 600 0.95rem var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-primary {
+  background: var(--green);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--forest);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--forest);
+  border-color: var(--forest);
+}
+
+.btn-outline:hover {
+  background: var(--forest);
+  color: var(--white);
+}
+
+.btn[disabled],
+.btn.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- CHIPS & BADGES ---------- */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 28px;
+}
+
+.chip {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--ivory);
+  background: transparent;
+  color: var(--ivory);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.chip.is-active {
+  background: var(--tan);
+  border-color: var(--tan);
+  color: var(--forest);
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--chip);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge-available {
+  background: var(--ok-bg);
+  color: var(--ok-fg);
+}
+
+.badge-occupied {
+  background: var(--bad-bg);
+  color: var(--bad-fg);
+}
+
+/* ---------- CARDS & GRIDS ---------- */
+.card {
+  background: var(--white);
+  color: var(--forest);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+.card .muted {
+  color: var(--muted);
+}
+
+.card a:not(.btn) {
+  color: var(--green);
+}
+
+.card-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.card h3 {
+  margin: 10px 0 4px;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.price small {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* ---------- FORMS & ALERTS ---------- */
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 0 6px;
+}
+
+.form-input,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--forest);
+  background: var(--white);
+}
+
+.form-input:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--green);
+}
+
+.form-row {
+  margin-bottom: 18px;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 0 0 20px;
+  font-size: 0.95rem;
+}
+
+.alert-error {
+  background: var(--bad-bg);
+  color: var(--bad-fg);
+}
+
+.alert-success {
+  background: var(--ok-bg);
+  color: var(--ok-fg);
+}
+
+/* ---------- INCLUSIONS (DETAILS & SUMMARY) ---------- */
+details.inclusions summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+details.inclusions summary::-webkit-details-marker {
+  display: none;
+}
+
+details.inclusions ul {
+  margin: 14px 0 16px;
+  padding-left: 20px;
+  font-size: 0.92rem;
+}
+
+details.inclusions[open] summary {
+  margin-bottom: 0;
+}
+
+/* ---------- STAT TILES / LISTS ---------- */
+.stat {
+  font-family: var(--font-head);
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid var(--olive);
+  opacity: 0.4;
+  margin: 28px 0;
+}
+
+.row-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- FOOTER ---------- */
+.site-footer {
+  background: var(--brown);
+  color: var(--white);
+  padding: 22px 24px;
+  font-size: 0.9rem;
+}
+
+.site-footer .inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.site-footer a {
+  color: var(--tan);
+}
+
+/* ---------- SCREEN RESIZING ---------- */
+@media (max-width: 720px) {
+  .menu-toggle {
+    display: inline-block;
+  }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 66px;
+    z-index: 10;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 24px;
+    background: var(--white);
+    border-bottom: 3px solid var(--brown);
+  }
+
+  .site-nav.is-open {
+    display: flex;
+  }
+
+  .site-header {
+    position: relative;
+  }
+
+  main {
+    padding: 28px 16px 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
