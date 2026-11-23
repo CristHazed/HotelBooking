@@ -23,6 +23,60 @@
             .receipt-card { box-shadow: none; border: none; width: 100%; }
             .actions { display: none; }
         }
+        .details-group {
+            margin-top: 1rem;
+        }
+
+        .details-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .itinerary-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        .itinerary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+
+        .itinerary-item:last-child {
+            border-bottom: none;
+        }
+
+        .itinerary-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .itinerary-name {
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .itinerary-price {
+            color: #0f172a;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .itinerary-empty {
+            padding: 0.75rem 1rem;
+            color: #6b7280;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -67,10 +121,6 @@
             <span>{{ booking.checkout_date |date:"F j, Y, g:i a" }}</span>
         </div>
         <div class="details-group">
-            <span>Extra Guess Count:</span>
-            <span>{{ booking.guess_count }}</span>
-        </div>
-        <div class="details-group">
             <span>Total Booking Cost:</span>
             <span>{{ booking.total_cost }}</span>
         </div>
@@ -78,6 +128,20 @@
             <span>Status:</span>
             <span style="color: #16a34a;">{{ booking.status }}</span>
         </div>
+        <div class="details-group">
+            <span class="details-label">Itineraries:</span>
+            <ul class="itinerary-list">
+            {% for itinerary in booking.itineraries.all %}
+                <li class="itinerary-item">
+                    <span class="itinerary-name">{{ itinerary.itinerary_name }}</span>
+                    <span class="itinerary-price">₱{{ itinerary.price }}</span>
+                </li>
+            {% empty %}
+                <li class="itinerary-empty">No itineraries selected</li>
+            {% endfor %}
+            </ul>
+        </div>
+
 
         <div class="actions">
             <button onclick="window.print()" class="btn btn-outline">Print Receipt</button>

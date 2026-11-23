@@ -23,7 +23,7 @@ class Room(models.Model):
     ROOM_TYPES = [
         ('Standard', 'Standard Room'),
         ('Deluxe', 'Deluxe / Suite'),
-        ('VIP', 'Important Guess'),
+        ('VIP', 'Important Guest'),
         ('Deluxe Plus', 'Delux Capacity')
     ]
     name = models.CharField(max_length=150)                                                     # Name of the Room / Room Number
@@ -66,8 +66,8 @@ class StandardRoom(Room):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
         total_rate = self.base_rate * stay_duration
-        if self.guess > self.capacity:
-            room_total = (self.guess_count * self.extra_guest_fee) + total_rate
+        if self.guest > self.capacity:
+            room_total = (self.guest_count * self.extra_guest_fee) + total_rate
         return room_total
     
 class DeluxeRoom(Room):
@@ -162,8 +162,6 @@ class Booking(models.Model):
     status = models.CharField(max_length=50, default='Confirmed')                   # Status of the booking
     created_at = models.DateTimeField(auto_now_add=True)                            # Uploads when the booking was created
     itineraries = models.ManyToManyField(Itinerarie,blank=True)
-    guess_count = models.IntegerField(default=0)
-    extra_guess_fee = models.IntegerField(default=500)
 
     # Custom save function to save ref number or reservation number
     def save(self, *args, **kwargs):
@@ -196,12 +194,8 @@ class Booking(models.Model):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
         room_cost = self.venue.price_per_night * stay_duration
-        if self.extra_guess_fee > 0:
-            room_total = (self.guess_count * self.extra_guess_fee) + room_cost 
-        else:
-            room_total = room_cost
         itineraries_total = sum(itinerary.price for itinerary in self.itineraries.all())
-        total_booking_cost = room_total + itineraries_total
+        total_booking_cost = room_cost + itineraries_total
         return total_booking_cost
 
     @property
