@@ -12,6 +12,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .models import UserProfile, Room, Booking
 from django.db.models import Count
 
+from django.db.models import Q                                              # Allow for complex queries with OR conditions
+from django.utils.dateparse import parse_date                               # Parse date strings into Python date objects
+from django.utils import timezone                                           # Handle timezone-aware datetime objects
+
 # Create your views here.
 
 # Landing Page Template
@@ -199,3 +203,62 @@ def verify_reservation_view(request):
         booking = Booking.objects.filter(reservation_number__iexact=query).first()
     
     return render(request, 'page/verify_reservation.html', {'booking': booking, 'query': query})
+
+def search_rooms(request):
+    query = request.GET.get("search", "").strip()
+    room_type = request.GET.get("room_type", "")
+    guests = request.GET.get("guests", "")
+    check_in = request.GET.get("check_in", "")
+    check_out = request.GET.get("check_out", "")
+    
+    
+    
+    rooms = Room.objects.all()
+    errors = []
+    
+    # 1. Keyword Search
+    if query:
+        rooms = rooms.filter(
+            Q(name__icontains=query) | Q(room_type__icontains=query)
+        )
+    
+    # 2. Room Type Filter
+    if room_type:
+        rooms = rooms.filter(room_type=room_type)
+    
+    # 3. Guest Capacity Filter    
+    if guests:
+        try:
+            guest_count = int(guests)
+            
+            if guest_count < 1:
+                errors.append("Number of guests must be greater than 1.")
+            else:
+                rooms = rooms.filter(capacity__gte=guest_count)
+        except ValueError:
+            errors.append("Invalid number of guests.")
+            
+    # 4. Date Availability Filter
+    if check_in or check_out:
+        
+        start_date = parse_date(check_in)
+        end_date = parse_date(check_out)
+        
+        if not start_date or not end_date:
+            errors.append("Invalid check-in or check-out date format.")
+        elif start_date >= end_date:
+            errors.append("Check-out date must be after check-in date.")
+        elif start_date < timezone.localdate():
+            errors.append("Check-in date cannot be in the past.")
+        else:
+            # Find rooms with overlapping active bookings
+            occupied_rooms = Booking.objects.filter(
+                booking_date__date__lt = end_date,
+                checkout__date__date__gt = start_date,
+            ).exclude(status="Cancelled").values_list("venue_id", flat=True)
+    else:
+        # Without selected dates, show currently available rooms
+        rooms = rooms.filter(is_available=True)
+        
+    
+    return render(request, "page/search_results.html", {"rooms": rooms, "query": query})

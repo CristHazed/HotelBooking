@@ -51,10 +51,12 @@ class Room(models.Model):
         status = "Available" if self.is_available else "Booked"
         return f"{self.name} (Capacity: {self.capacity}) : [{status}]"
 
+# Room Type Proxies (Line 55 - 138)
 class StandardRoom(Room):
     class Meta:
         proxy = True
 
+    # Custom initialization for StandardRoom
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.extra_guest_fee = Decimal('300.00')
@@ -63,6 +65,7 @@ class StandardRoom(Room):
             if self.capacity is None:
                 self.capacity = 1
 
+    # Custom method to calculate the total cost for a StandardRoom booking
     def calculate_StandardRate(self, stay_duration):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
@@ -70,11 +73,12 @@ class StandardRoom(Room):
         if self.guest > self.capacity:
             room_total = (self.guest_count * self.extra_guest_fee) + total_rate
         return room_total
-    
+
 class DeluxeRoom(Room):
     class Meta:
         proxy = True
-            
+       
+    # Custom initialization for DeluxeRoom     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.extra_guest_fee = Decimal('75.00')
@@ -82,7 +86,8 @@ class DeluxeRoom(Room):
             self.room_type = 'Deluxe'
             if self.capacity is None:
                 self.capacity = 3
-        
+    
+    # Custom method to calculate the total cost for a DeluxeRoom booking    
     def calculate_DeluxeRate(self, stay_duration, guest_count):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
@@ -95,7 +100,8 @@ class DeluxeRoom(Room):
 class VIPRoom(Room):
     class Meta:
         proxy = True
-            
+    
+    # Custom initialization for VIPRoom        
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.extra_guest_fee = Decimal('100.00')
@@ -103,7 +109,8 @@ class VIPRoom(Room):
             self.room_type = 'VIP'
             if self.capacity is None:
                 self.capacity = 4
-        
+    
+    # Custom method to calculate the total cost for a VIPRoom booking    
     def calculate_VIPRate(self, stay_duration, guest_count):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
@@ -116,7 +123,8 @@ class VIPRoom(Room):
 class DeluxePlusRoom(Room):
     class Meta:
         proxy = True
-            
+    
+    # Custom initialization for DeluxePlusRoom        
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.extra_guest_fee = Decimal('125.00')
@@ -124,7 +132,8 @@ class DeluxePlusRoom(Room):
             self.room_type = 'Deluxe Plus'
             if self.capacity is None:
                 self.capacity = 5
-        
+    
+    # Custom method to calculate the total cost for a DeluxePlusRoom booking    
     def calculate_DeluxePlusRate(self, stay_duration, guest_count):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
@@ -156,90 +165,7 @@ class Itinerarie(models.Model):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
         return self.base_rate * stay_duration
-
-class StandardRoom(Room):
-    class Meta:
-        proxy = True
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.extra_guest_fee = Decimal('50.00')
-        if not self.pk:
-            self.room_type = 'Standard'
-            if self.capacity is None:
-                self.capacity = 2
-
-    def calculate_StandardRate(self, stay_duration, guest_count):
-        if stay_duration <= 0:
-            raise ValueError("Stay duration must be greater than 0")
-        total_rate = self.base_rate * stay_duration
-        if guest_count > self.capacity:
-            extra_guests = guest_count - self.capacity
-            total_rate += extra_guests * self.extra_guest_fee
-        return total_rate
     
-class DeluxeRoom(Room):
-    class Meta:
-        proxy = True
-            
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.extra_guest_fee = Decimal('75.00')
-        if not self.pk:
-            self.room_type = 'Deluxe'
-            if self.capacity is None:
-                self.capacity = 3
-        
-    def calculate_DeluxeRate(self, stay_duration, guest_count):
-        if stay_duration <= 0:
-            raise ValueError("Stay duration must be greater than 0")
-        total_rate = self.base_rate * stay_duration
-        if guest_count > self.capacity:
-            extra_guests = guest_count - self.capacity
-            total_rate += extra_guests * self.extra_guest_fee
-        return total_rate
-    
-class VIPRoom(Room):
-    class Meta:
-        proxy = True
-            
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.extra_guest_fee = Decimal('100.00')
-        if not self.pk:
-            self.room_type = 'VIP'
-            if self.capacity is None:
-                self.capacity = 4
-        
-    def calculate_VIPRate(self, stay_duration, guest_count):
-        if stay_duration <= 0:
-            raise ValueError("Stay duration must be greater than 0")
-        total_rate = self.base_rate * stay_duration
-        if guest_count > self.capacity:
-            extra_guests = guest_count - self.capacity
-            total_rate += extra_guests * self.extra_guest_fee
-        return total_rate
-    
-class DeluxePlusRoom(Room):
-    class Meta:
-        proxy = True
-            
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.extra_guest_fee = Decimal('125.00')
-        if not self.pk:
-            self.room_type = 'Deluxe Plus'
-            if self.capacity is None:
-                self.capacity = 5
-        
-    def calculate_DeluxePlusRate(self, stay_duration, guest_count):
-        if stay_duration <= 0:
-            raise ValueError("Stay duration must be greater than 0")
-        total_rate = self.base_rate * stay_duration
-        if guest_count > self.capacity:
-            extra_guests = guest_count - self.capacity
-            total_rate += extra_guests * self.extra_guest_fee
-        return total_rate
 # Booking Structure / Booking Handler
 class Booking(models.Model):
     reservation_number = models.CharField(max_length=20, unique=True, blank=True)   # Unique Reservations number generated from UUID

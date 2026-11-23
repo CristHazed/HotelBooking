@@ -16,4 +16,5 @@ urlpatterns = [
     path('verify/', views.verify_reservation_view, name='verify_reservation'),
     path('my_bookings/', views.my_bookings_view, name="my_bookings"),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('search/', views.search_rooms, name='search_rooms'),
 ]
