@@ -253,12 +253,36 @@ def search_rooms(request):
         else:
             # Find rooms with overlapping active bookings
             occupied_rooms = Booking.objects.filter(
-                booking_date__date__lt = end_date,
-                checkout__date__date__gt = start_date,
+                booking_date__date__lt=end_date,
+                checkout__date__date__gt=start_date,
             ).exclude(status="Cancelled").values_list("venue_id", flat=True)
+            
+            # Exclude occupied rooms from the available rooms
+            rooms = rooms.exclude(id__in=occupied_rooms)
     else:
         # Without selected dates, show currently available rooms
         rooms = rooms.filter(is_available=True)
-        
     
-    return render(request, "page/search_results.html", {"rooms": rooms, "query": query})
+    # 5. Room Type Grouping for Display
+    room_groups = [
+        {
+            "value": value,
+            "label": label,
+            "count": Room.objects.filter(room_type=value, is_available=True).count(),
+        }
+        for value, label in Room.ROOM_TYPES
+    ]
+    
+    # 6. Context
+    context = {
+        "available_rooms": rooms,
+        "room_groups": room_groups,
+        "search_query": query,
+        "selected_type": room_type,
+        "guests": guests,
+        "check_in": check_in,
+        "check_out": check_out,
+        "errors": errors,
+    }
+    
+    return render(request, "page/search_results.html", context)
