@@ -36,11 +36,10 @@ class CustomSignUpForm(UserCreationForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['venue', 'booking_date', 'checkout_date', 'itineraries', 'guess_count']
+        fields = ['venue', 'booking_date', 'checkout_date', 'itineraries']
         widgets = {
             'venue': forms.Select(attrs={'class': 'form-input'}),
             'booking_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-input'}),
             'checkout_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-input'}),
             'itineraries': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
-            'guess_count': forms.NumberInput(attrs={'class': 'form-input'})
         }
