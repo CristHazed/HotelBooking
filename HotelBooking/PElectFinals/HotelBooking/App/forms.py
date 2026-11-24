@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import UserProfile, Booking
+from .models import UserProfile, Booking, Itinerarie
 
 class CustomSignUpForm(UserCreationForm):
     fullname = forms.CharField(
@@ -36,10 +36,18 @@ class CustomSignUpForm(UserCreationForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['venue', 'booking_date', 'checkout_date']
+        fields = ['venue', 'booking_date', 'checkout_date', 'participants', 'itineraries']
         widgets = {
             'venue': forms.Select(attrs={'class': 'form-input'}),
             'booking_date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-input'}),
             'checkout_date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-input'}),
             'itineraries': forms.CheckboxSelectMultiple(),
+        }
+        
+class ItirenariesForm(forms.ModelForm):
+    class Meta:
+        model = Itinerarie
+        fields = ['participants']
+        widgets = {
+            'participants': forms.NumberInput(attrs={'class': 'form-input', 'min': 1}),
         }

@@ -5,11 +5,11 @@ from .forms import CustomSignUpForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import BookingForm
+from .forms import BookingForm, ItirenariesForm
 from django.db import IntegrityError
 
 from django.contrib.admin.views.decorators import staff_member_required
-from .models import UserProfile, Room, Booking
+from .models import UserProfile, Room, Booking, Itinerarie
 from django.db.models import Count
 
 # Create your views here.
@@ -32,10 +32,13 @@ def landing_page(request):
     booking_form.fields["venue"].queryset = (
         available_rooms.order_by("room_type", "name")
     )
+    itirenary_form = ItirenariesForm()
+    
 
     return render(request, "page/landing.html", {
         "booking_form": booking_form,
         "room_groups": room_groups,
+        "Itirenarie_form": itirenary_form,
     })
 
 

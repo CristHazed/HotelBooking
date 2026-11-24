@@ -195,6 +195,7 @@ class Booking(models.Model):
     status = models.CharField(max_length=50, default='Confirmed')                   # Status of the booking
     created_at = models.DateTimeField(auto_now_add=True)                            # Uploads when the booking was created
     itineraries = models.ManyToManyField(Itinerarie,blank=True)
+    participants = models.IntegerField(default=1)                                        # Number of participants for the booking
 
     # Custom save function to save ref number or reservation number
     def save(self, *args, **kwargs):
