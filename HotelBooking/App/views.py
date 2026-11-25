@@ -12,6 +12,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .models import UserProfile, Room, Booking
 from django.db.models import Count
 
+from .exceptions import HotelBookingError
+from .guest import Guest
+from .packs import PackCatalog
+
 # Create your views here.
 
 # Landing Page Template
@@ -199,3 +203,47 @@ def verify_reservation_view(request):
         booking = Booking.objects.filter(reservation_number__iexact=query).first()
     
     return render(request, 'page/verify_reservation.html', {'booking': booking, 'query': query})
+
+# Filter and display available hotel packages by category
+def packs_view(request):
+    catalog = PackCatalog()
+    category = request.GET.get("category", "all").strip().lower()
+    try:
+        packs = catalog.by_category(category)
+    except HotelBookingError as error:
+        messages.error(request, str(error))
+        packs, category = catalog.all(), "all"
+    return render(request, "page/packs.html", {
+        "packs": packs,
+        "selected": category,
+        "categories": catalog.CATEGORIES,
+    })
+
+# Render static hotel terms and policies page
+def terms_view(request):
+    return render(request, "page/terms.html")
+
+# Display saved guest info, validate updates, and list session bookings
+def profile_view(request):
+    values = request.session.get("guest", {})
+
+    if request.method == "POST":
+        values = {
+            "name": request.POST.get("name", ""),
+            "email": request.POST.get("email", ""),
+            "phone": request.POST.get("phone", ""),
+        }
+        try:
+            guest = Guest(**values)
+        except HotelBookingError as error:
+            messages.error(request, str(error))
+        else:
+            request.session["guest"] = guest.to_dict()
+            messages.success(request, "Profile saved.")
+            return redirect("profile")
+
+    return render(request, "page/profile.html", {
+        "values": values,
+        "bookings": request.session.get("bookings", []),
+        "pack_count": len(PackCatalog().all()),
+    })      

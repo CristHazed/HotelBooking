@@ -1,0 +1,37 @@
+{% extends "page/base.html" %}
+{% block title %}Packs and add-ons · Lushiux Hotel{% endblock %}
+
+{% block content %}
+<h1>Lushiux Experiences</h1>
+<h2>Packs and add-ons</h2>
+<p class="muted">Add experiences to any room booking.</p>
+
+<div class="chip-row" role="group" aria-label="Filter packs by category">
+  <a class="chip {% if selected == 'all' %}is-active{% endif %}" href="{% url 'packs' %}"
+     {% if selected == 'all' %}aria-current="true"{% endif %}>All</a>
+  {% for key, label in categories %}
+    <a class="chip {% if selected == key %}is-active{% endif %}" href="{% url 'packs' %}?category={{ key }}"
+       {% if selected == key %}aria-current="true"{% endif %}>{{ label }}</a>
+  {% endfor %}
+</div>
+
+<div class="card-grid">
+  {% for pack in packs %}
+  <article class="card">
+    <span class="tag">{{ pack.category|title }}</span>
+    <h3>{{ pack.name }}</h3>
+    <p class="price">{{ pack.formatted_price }} <small>{{ pack.price_note }}</small></p>
+    <p class="muted">{{ pack.summary }}</p>
+    <details class="inclusions">
+      <summary class="btn btn-outline">View inclusions</summary>
+      <ul>
+        {% for item in pack.inclusions %}<li>{{ item }}</li>{% endfor %}
+      </ul>
+      <a class="btn btn-primary" href="{% url 'book_venue' %}?pack={{ pack.pack_id }}">Add to booking</a>
+    </details>
+  </article>
+  {% empty %}
+  <p>No packs match this filter. Choose “All” to see every pack.</p>
+  {% endfor %}
+</div>
+{% endblock %}
