@@ -16,6 +16,9 @@ class InvalidPackError(HotelBookingError):
 class InvalidPackQuantityError(HotelBookingError):
     pass
 
+class InvalidParticipantsCount(HotelBookingError):
+    pass
+
 # ---------------- ROOMS / STAY ---------------- 
 class InvalidRoomSelectionError(HotelBookingError):
     pass

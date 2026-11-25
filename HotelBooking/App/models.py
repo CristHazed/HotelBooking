@@ -6,6 +6,9 @@ from datetime import timedelta, datetime, time
 from django.db import models
 from django.contrib.auth.models import User
 
+import math
+from .exceptions import InvalidPackError, InvalidPackQuantityError, InvalidStayDurationError, InvalidParticipantsCount
+
 
 # Create your models here.
 
@@ -136,21 +139,50 @@ class DeluxePlusRoom(Room):
 
 
 class Itinerarie(models.Model):
-    ITINERARIES_TYPE = [
-            ('OUTDOOR & ADVENTURE PACKS', 'Adventure'),
-            ('WELLNESS & HYDRO-SPA PACKS', 'Wellness'),
-            ('DINING & CULINARY ADD-ONS', 'Dining'),
-            ('ENTERTAINMENT & LEISURE PASSES', 'Leisure')
-        ]
-    Itineraries_type = models.CharField(max_length=50, choices=ITINERARIES_TYPE, default='None')
-    itinerary_name = models.CharField(max_length=50)
+    CATEGORIES = [
+        ("adventure", "Adventure"),
+        ("wellness", "Wellness"),
+        ("dining", "Dining"),
+        ("leisure", "Leisure"),
+    ]
+
+    PACKAGE = [
+        ('Per person', 'Person'),
+        ('Per group', 'Group'),
+    ]
+
+    pack_id = models.CharField(max_length=30, default='None')
+    pack_name = models.CharField(max_length=50)
+    pack_category = models.CharField(max_length=20, choices=CATEGORIES, default='Unassigned')
     price = models.IntegerField(default=0)
-    participant_count = models.IntegerField(default=1)
-    itinerary_description = models.TextField(max_length=5000)
+    summary = models.CharField(max_length=500, default='After-hours Observatory Deck and guided telescope')
+    inclusions = models.TextField(null=True, blank=True)
+    price_note = models.CharField(max_length=20, choices=PACKAGE, default='per day')
+    participants = models.IntegerField(default=0)
 
     def __str__(self):
-            return self.itinerary_name
+            return self.pack_name
 
+class PerPerson(Itinerarie):
+    class Meta:
+        proxy = True
+
+    def calc_itinerary_cost(self):
+        total_itinerary_cost = self.price * self.participants
+        return total_itinerary_cost
+
+class PerGroup(Itinerarie):
+    class Meta:
+        proxy = True
+
+    def calc_itinerary_cost(self):
+        if self.participants < 0:
+            raise InvalidParticipantsCount('Number of participants should be greater than 0')
+        elif self.participants > 0 and self.participants < 6:
+            total_itinerary_cost = self.price
+        elif self.participants <= 7:
+            total_itinerary_cost = self.price * (self.participants / 6)
+        return total_itinerary_cost
     
     def calculate_rate(self, stay_duration):
         if stay_duration <= 0:
@@ -273,34 +305,54 @@ class Booking(models.Model):
         self.venue.release()        # release() is taken from Room object
         self.save()
 
-    # Calculate total for whole booking
     @property
-    def total_cost(self):
-        stay_duration = max(
-            (self.checkout_date.date() - self.booking_date.date()).days, 0,
+    def total_price(self):
+        nights = max(
+            (self.checkout_date.date() - self.booking_date.date()).days,
+            0,
         )
-        if stay_duration <= 0:
-            raise ValueError("Stay duration must be greater than 0")
-        room_cost = self.venue.price_per_night * stay_duration
-        itineraries_total = sum(itinerary.price for itinerary in self.itineraries.all())
-        total_booking_cost = room_cost + itineraries_total
-        return total_booking_cost
+        room_cost = self.venue.price_per_night * nights
+        itinerary_cost = sum(
+            selection.itinerary.price * selection.participant_count
+            for selection in self.itinerary_selections.all()
+        )
+        return room_cost + itinerary_cost
 
     @property
     def current_status(self):
-        today = timezone.localdate()
-
+        now = timezone.now()
+        
+        # If already completed or cancelled, keep that status
         if self.status.lower() in ['Completed', 'Cancelled']:
             return self.status
-
-        if today > self.checkout_date.date():
+            
+        # If the checkout time has passed -> Completed
+        if now > self.checkout_date:
             return 'Completed'
-
-        elif self.booking_date.date() == today or (self.booking_date.date() - today).days <= 1:
+            
+        # If booking date is within the next 24 hours or now -> Upcoming
+        elif now <= self.booking_date <= (now + timedelta(hours=24)):
             return 'Upcoming'
-
+            
+        # default back to Confirmed
         return self.status
 
     def __str__(self):
         return f"[{self.reservation_number}] {self.user.username} booked {self.venue.name}"
       
+# EXCEPTIONS
+class InvalidRoomSelectionError(Exception):
+    pass
+
+class InvalidStayDurationError(Exception):
+    pass
+
+class OccupiedRoomBookingError(Exception):
+    pass
+
+# GUEST MODEL
+class Guest:
+    def __init__(self, name):
+        if not name or not name.strip():
+            raise ValueError("Guest name cannot be empty.")
+        self.name = name.strip()
