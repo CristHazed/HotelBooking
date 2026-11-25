@@ -19,9 +19,9 @@ body, html {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background-image: 
+  background-image:
     linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.35) 100%),
-    url('../static/Images/landing-page-background.webp');
+    url('../Images/landing-page-background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -63,7 +63,6 @@ body, html {
   justify-items: start;
 }
 
-
 .brand-name {
   font-family: 'Cinzel', serif;
   font-size: 1.05rem;
@@ -79,7 +78,7 @@ body, html {
   gap: 44px;
   font-family: 'Tenor Sans', sans-serif;
   font-weight: 400;
-  font-style: normal; 
+  font-style: normal;
 }
 
 .nav-links a {
@@ -114,10 +113,10 @@ body, html {
 }
 
 .nav-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
 }
 
 .btn-auth {
@@ -161,7 +160,7 @@ body, html {
 }
 
 /* Staggered Indentation to Match Mockup */
-.hero-title .line-1, 
+.hero-title .line-1,
 .hero-title .line-2,
 .hero-title .line-3 {
   margin-left: 0;
@@ -203,7 +202,7 @@ body, html {
   min-height: 100vh;
   background-image:
     linear-gradient(rgba(14, 24, 18, 0.58), rgba(14, 24, 18, 0.68)),
-    url('../static/Images/about-background.webp');
+    url('../Images/about-background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -303,7 +302,7 @@ body, html {
   min-height: 100vh;
   background-image:
     linear-gradient(rgba(10, 18, 14, 0.52), rgba(10, 18, 14, 0.62)),
-    url('../static/Images/experiences-background.webp');
+    url('../Images/experiences-background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -342,7 +341,6 @@ body, html {
 
 /* Carousel Arrows */
 .exp-arrow {
-  position: fixed; /* or absolute inside .experiences-stage */
   position: absolute;
   top: 155px;
   width: 48px;
@@ -434,18 +432,17 @@ body, html {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-/* Collapsible Gold Details Banner */
+/* Gold Details Banner (Visible by Default) */
 .exp-details-drawer {
   width: 215px;
   min-height: 250px;
   flex: 1;
-  opacity: 0;
+  opacity: 1;
   overflow: hidden;
   margin-top: -96px;
   background-color: #d8b836;
   color: #161614;
-  transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.35s ease;
-  padding: 112px 20px 26px 24px;
+  padding: 104px 20px 26px 24px;
   z-index: 2;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
 }
@@ -492,20 +489,6 @@ body, html {
   height: 150px;
 }
 
-/* Gold Details Banner (Visible by Default) */
-.exp-details-drawer {
-  width: 215px;
-  opacity: 1;
-  overflow: hidden;
-  margin-top: -96px; /* Tucks behind the lower half of the diamond */
-  background-color: #d8b836;
-  color: #161614;
-  padding: 104px 20px 26px 24px;
-  z-index: 2;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
-}
-
-/* Compact 4-card layout for Dining & Culinary Add-ons */
 .exp-track.is-compact .exp-details-drawer {
   width: 206px;
   margin-top: -90px;
@@ -740,7 +723,6 @@ body, html {
   .experiences-section {
     padding: 72px 24px;
     min-height: auto;
-    background-attachment: fixed;
   }
 
   .exp-arrow {
