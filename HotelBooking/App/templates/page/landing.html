@@ -1,155 +1,316 @@
-{% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Discover a forest-inspired luxury stay at Luxious Hotel.">
-  <title>Luxious Hotel | A forest retreat</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lushiux Hotel — The Canopy of Modern Escape</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'style/landing.css' %}">
-  <script src="{% static 'JSFile/main.js' %}" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Italianno&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../static/landing.css">
 </head>
 <body>
-  <div class="top-strip">
-    <span>AN INTIMATE FOREST RETREAT</span>
-    <span>Modern comfort, rooted in nature</span>
-  </div>
 
-  <header class="site-header">
-    <div class="nav-wrap">
-      <a class="brand" href="{% url 'landing' %}">
-        <span class="brand-mark">L</span>
-        <span class="brand-name">LUXIOUS <small>HOTEL</small></span>
-      </a>
+  <header class="hero-section">
+    <!-- Top Navigation Bar -->
+     <div class="brand-and-nav">
+         <nav class="navbar">
+            <div class="brand">
+              <img src="../static/Images/hotel-logo.webp" alt="Lushiux Hotel Logo" class="brand-logo">
+              <span class="brand-name">LUSHIUX HOTEL</span>
+            </div>
 
-      <button class="menu-toggle" id="menuToggle" type="button"
-              aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
-        <span></span><span></span><span></span>
-      </button>
+            <ul class="nav-links">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About us</a></li>
+              <li><a href="#suites">Suites</a></li>
+              <li><a href="#experiences">Experiences</a></li>
+              <li><a href="#contact">Contact us</a></li>
+            </ul>
 
-      <nav class="site-nav" id="siteNav">
-        <a href="#experience">The retreat</a>
-        <a href="#rooms">Rooms</a>
-        <a href="#amenities">Experiences</a>
-        <a href="#offers">Offers</a>
-      </nav>
+            <div class="nav-actions">
+              <a href="#book" class="btn-book">Book Now</a>
+              <a href="#auth" class="btn-auth">Log in / Sign up</a>
+            </div>
+        </nav>
+     </div>
 
-      <div class="nav-actions">
-        <a class="sign-in" href="{% url 'login' %}">Sign in</a>
-        <a class="button button-gold" href="#booking">Book your stay <span>↗</span></a>
-      </div>
-    </div>
+    <!-- Main Hero Typography -->
+    <main class="hero-content">
+      <h1 class="hero-title">
+        <span class="line-1">THE CANOPY</span>
+        <span class="line-2"><em>Of</em> MODERN</span>
+        <span class="line-3">ESCAPE</span>
+      </h1>
+      <a href="#explore" class="btn-explore">Explore</a>
+    </main>
   </header>
 
-  <main>
-    <section class="hero" id="experience">
-      <div class="hero-photo" role="img" aria-label="Sunlight falling through a quiet forest"></div>
-      <div class="hero-shade"></div>
-      <div class="hero-content">
-        <p class="eyebrow eyebrow-light">A slower kind of stay</p>
-        <h1>Where the forest<br>meets <em>fine living.</em></h1>
+  <section id="about" class="about-section">
+    <div class="about-container">
+      <div class="about-text">
+        <h2>About Lushiux Hotel</h2>
         <p>
-          Step into a quieter world of natural textures, considered comfort
-          and warm hospitality.
+          Perched high above a misty tropical rainforest valley, Lushiux Hotel is an ultra-luxury highland sanctuary where untamed jungle adventure meets restorative architectural calm. Designed for travelers seeking true seclusion without sacrificing modern indulgence, our glass-and-timber retreat immerses you directly within the upper forest canopy.
         </p>
-        <a class="button button-gold" href="#booking">Discover your stay <span>↗</span></a>
-      </div>
-      <span class="hero-caption">LUXIOUS HOTEL · NATURE, REFINED</span>
-    </section>
-
-    <section class="booking-panel" id="booking">
-      <div class="booking-intro">
-        <p class="eyebrow">Make yourself at home</p>
-        <h2>Your forest<br><em>escape begins here.</em></h2>
-        <p>Choose your room and arrival date to begin a reservation.</p>
-      </div>
-
-      <form class="booking-form" method="post" action="{% url 'book_venue' %}">
-        {% csrf_token %}
-        {{ booking_form.non_field_errors }}
-
-        <div class="field">
-          <label for="{{ booking_form.venue.id_for_label }}">Room</label>
-          {{ booking_form.venue }}
-          {{ booking_form.venue.errors }}
-        </div>
-
-        <div class="field">
-          <label for="{{ booking_form.booking_date.id_for_label }}">Arrival date and time</label>
-          {{ booking_form.booking_date }}
-          {{ booking_form.booking_date.errors }}
-        </div>
-
-        <button class="button button-forest booking-submit" type="submit">
-          Check availability <span>→</span>
-        </button>
-        <small class="booking-hint">Sign in is required to complete a reservation.</small>
-      </form>
-    </section>
-
-    <section class="rooms-section section-wrap" id="rooms">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Rest among the trees</p>
-          <h2>Rooms shaped<br>by <em>the landscape.</em></h2>
-        </div>
         <p>
-          Explore the room types currently available at Luxious Hotel.
-          Select a room in the booking form to continue.
+          Whether you spend your mornings trekking emerald mountain ridges and bamboo river trails, or your evenings unwinding in heated mineral hydrotherapy pools beneath a mountaintop observatory, every detail of your stay is curated for effortless wonder. At Lushiux Hotel, nature is not merely a backdrop—it is the heart of your escape.
         </p>
       </div>
 
-      <div class="room-type-grid">
-        {% for group in room_groups %}
-          <article class="room-type-card">
-            <span class="room-symbol">✳</span>
-            <p class="room-kicker">ROOM COLLECTION</p>
-            <h3>{{ group.label }}</h3>
-            <p class="availability">{{ group.count }} available room{{ group.count|pluralize }}</p>
-            <a href="#booking">Choose a room <span>↗</span></a>
-          </article>
-        {% empty %}
-          <p class="empty-state">No rooms are currently available. Please check back soon.</p>
-        {% endfor %}
+      <div class="diamond-gallery">
+        <div class="diamond-card diamond-1">
+          <img src="../static/Images/about-canopy-lounge.webp" alt="Open-air bamboo pavilion overlooking lush forest">
+        </div>
+        <div class="diamond-card diamond-2">
+          <img src="../static/Images/about-stargazing.webp" alt="Stargazers looking up at the night sky with a telescope">
+        </div>
+        <div class="diamond-card diamond-3">
+          <img src="../static/Images/about-infinity-pool.webp" alt="Infinity pool overlooking tropical hills and palm trees">
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="amenities-section" id="amenities">
-      <div class="amenities-photo" role="img" aria-label="A peaceful forest setting"></div>
-      <div class="amenities-copy">
-        <p class="eyebrow eyebrow-light">Grounded in nature</p>
-        <h2>Let the day<br>unfold <em>gently.</em></h2>
-        <p>
-          Find a peaceful corner, enjoy a slower morning and return to the
-          comfort of a thoughtfully appointed room.
-        </p>
-        <a class="light-link" href="#booking">Plan your visit <span>→</span></a>
+  <section id="suites" class="suites-section"></section>
+
+  <section id="experiences" class="experiences-section">
+    <div class="experiences-header">
+      <h2 id="expCategoryTitle" class="experiences-category-title">OUTDOOR &amp; ADVENTURE PACKS</h2>
+    </div>
+
+    <div class="experiences-stage">
+      <button type="button" id="expPrevBtn" class="exp-arrow exp-prev" aria-label="Previous experiences">&#10094;</button>
+
+      <div id="expTrack" class="exp-track"></div>
+
+      <button type="button" id="expNextBtn" class="exp-arrow exp-next" aria-label="Next experiences">&#10095;</button>
+    </div>
+  </section>
+
+  <footer id="contact" class="site-footer">
+    <div class="footer-container">
+      <!-- Left Column: Gold Logo, Brand Name & Tagline -->
+      <div class="footer-brand">
+        <img src="../static/Images/lushiux-hotel-gold-logo.webp" alt="Lushiux Hotel Gold Emblem" class="footer-logo">
+        <span class="footer-brand-name">LUSHIUX HOTEL</span>
+        <p class="footer-tagline">The Canopy of Modern Escape</p>
       </div>
-    </section>
 
-    <section class="offer-section" id="offers">
-      <p class="eyebrow">A reason to linger</p>
-      <h2>Make space for<br><em>something restorative.</em></h2>
-      <p>Choose an available room and arrival date to start planning your stay.</p>
-      <a class="button button-forest" href="#booking">Explore availability <span>↗</span></a>
-    </section>
-  </main>
+      <!-- Center Column: Address, Reservations & Check-in/Check-out -->
+      <div class="footer-info">
+        <div class="footer-info-block">
+          <h3>ADDRESS</h3>
+          <p>Highland Canopy Ridge,<br>Cebu Mountains</p>
+        </div>
 
-  <footer class="site-footer">
-    <a class="brand brand-footer" href="{% url 'landing' %}">
-      <span class="brand-mark">L</span>
-      <span class="brand-name">LUXIOUS <small>HOTEL</small></span>
-    </a>
-    <span>Modern comfort, rooted in nature.</span>
-    <div class="footer-links">
-      <a href="{% url 'signup' %}">Create an account</a>
-      <a href="{% url 'login' %}">Sign in</a>
-      <a href="#experience">Back to top ↑</a>
+        <div class="footer-info-block">
+          <h3>RESERVATIONS PHONE &amp; EMAIL</h3>
+          <p>
+            <a href="tel:+639123456789">+639123456789</a><br>
+            <a href="mailto:concierge@lushiuxhotel.com">concierge@lushiuxhotel.com</a>
+          </p>
+        </div>
+
+        <div class="footer-hours">
+          <div class="footer-hour-item">
+            <h3>CHECK-IN</h3>
+            <p>3:00 PM</p>
+          </div>
+          <div class="footer-hour-item">
+            <h3>CHECK-OUT</h3>
+            <p>12:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Navigation Links & Social Icons -->
+      <div class="footer-nav-col">
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About us</a></li>
+          <li><a href="#suites">Suites</a></li>
+          <li><a href="#experiences">Experiences</a></li>
+          <li><a href="#book" class="footer-book-link">Book now</a></li>
+        </ul>
+
+        <div class="footer-socials">
+          <a href="#facebook" aria-label="Lushiux Hotel Facebook">
+            <img src="../static/Images/facebook-gold-icon.webp" alt="Facebook">
+          </a>
+          <a href="#instagram" aria-label="Lushiux Hotel Instagram">
+            <img src="../static/Images/instagram-gold-icon.webp" alt="Instagram">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright -->
+    <div class="footer-bottom">
+      <p>&copy; 2026 Lushiux Hotel. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    const experienceSlides = [
+      {
+        category: 'OUTDOOR & ADVENTURE PACKS',
+        compact: false,
+        items: [
+          {
+            title: 'Celestial Stargazing',
+            image: '../static/Images/exp-stargazing.webp',
+            alt: 'Night sky over forest horizon',
+            perks: [
+              'Mountaintop observatory access',
+              'Telescope & constellation guide',
+              'Heated blanket & spiced tea'
+            ]
+          },
+          {
+            title: 'Canopy Expedition',
+            image: '../static/Images/exp-canopy.webp',
+            alt: 'Looking up through sunlit forest canopy',
+            perks: [
+              'Guided hanging rope-bridge tour',
+              '4K drone photo & video shoot',
+              'Harness, helmet & trail map'
+            ]
+          },
+          {
+            title: 'Ridge & River Trek',
+            image: '../static/Images/exp-ridge-river.webp',
+            alt: 'River reflecting mountain ridges at dusk',
+            perks: [
+              'Sunrise valley ridge hike',
+              'Bamboo river-rafting tour',
+              'Gourmet packed trail lunch'
+            ]
+          }
+        ]
+      },
+      {
+        category: 'WELLNESS & HYDRO-SPA PACKS',
+        compact: false,
+        items: [
+          {
+            title: 'Forest Thermal Spa',
+            image: '../static/Images/exp-thermal-spa.webp',
+            alt: 'Waterfall feeding a warm forest pool',
+            perks: [
+              'Private mountain stream access',
+              '60-min river-stone massage',
+              'Moss steam room & linen robe'
+            ]
+          },
+          {
+            title: 'Canopy Infinity Hydro-Spa',
+            image: '../static/Images/exp-hydro-spa.webp',
+            alt: 'Arched indoor-outdoor hydrotherapy pool',
+            perks: [
+              'Glass-bottom infinity pool pass',
+              'Heated mineral hydro-jet circuit',
+              '2-hr floating bed & detox juice'
+            ]
+          }
+        ]
+      },
+      {
+        category: 'DINING & CULINARY ADD-ONS',
+        compact: true,
+        items: [
+          {
+            title: 'Artisanal Continental Breakfast',
+            image: '../static/Images/exp-continental-breakfast.webp',
+            alt: 'Morning artisan dining experience',
+            perks: [
+              'Fresh pastries & sourdough',
+              'Granola, yogurt & tropical fruit',
+              'Single-origin coffee or fresh juice'
+            ]
+          },
+          {
+            title: 'Lushiux Grand Breakfast Buffet',
+            image: '../static/Images/exp-breakfast-buffet.webp',
+            alt: 'Skyview lounge dining experience',
+            perks: [
+              'Unlimited Skyview Hall access',
+              'Live bakery & made-to-order eggs',
+              'Tropical juice & espresso bar'
+            ]
+          },
+          {
+            title: 'Canopy Glass Karaoke Pod',
+            image: '../static/Images/exp-karaoke.webp',
+            alt: 'Private glass pod screening experience',
+            perks: [
+              'Soundproofed canopy glass pod',
+              '75" 4K OLED & wireless mics',
+              'Global song library & bar snacks'
+            ]
+          },
+          {
+            title: 'Executive Gaming Lounge Pass',
+            image: '../static/Images/exp-gaming-lounge.webp',
+            alt: 'Private lounge and gaming suite',
+            perks: [
+              'Private sound-insulated suite',
+              'RTX PC rigs, PS5 & Xbox Series X',
+              'Pro chairs, headsets & snacks'
+            ]
+          }
+        ]
+      }
+    ];
+    
+    let currentSlideIndex = 0;
+
+    const expCategoryTitle = document.getElementById('expCategoryTitle');
+    const expTrack = document.getElementById('expTrack');
+    const expPrevBtn = document.getElementById('expPrevBtn');
+    const expNextBtn = document.getElementById('expNextBtn');
+
+    function renderExperiencesSlide(index) {
+      const slide = experienceSlides[index];
+      expCategoryTitle.textContent = slide.category;
+      expTrack.classList.toggle('is-compact', Boolean(slide.compact));
+
+      expTrack.innerHTML = slide.items.map(item => `
+        <article class="exp-card">
+          <h3 class="exp-card-title">${item.title}</h3>
+          <div class="exp-diamond-wrap">
+            <div class="exp-diamond">
+              <img src="${item.image}" alt="${item.alt}">
+            </div>
+          </div>
+          <div class="exp-details-drawer">
+            <ul class="exp-details-list">
+              ${item.perks.map(perk => `<li>${perk}</li>`).join('')}
+            </ul>
+          </div>
+        </article>
+      `).join('');
+
+      expPrevBtn.style.display = index > 0 ? 'grid' : 'none';
+      expNextBtn.style.display = index < experienceSlides.length - 1 ? 'grid' : 'none';
+    }
+
+    expPrevBtn.addEventListener('click', () => {
+      if (currentSlideIndex > 0) {
+        currentSlideIndex -= 1;
+        renderExperiencesSlide(currentSlideIndex);
+      }
+    });
+
+    expNextBtn.addEventListener('click', () => {
+      if (currentSlideIndex < experienceSlides.length - 1) {
+        currentSlideIndex += 1;
+        renderExperiencesSlide(currentSlideIndex);
+      }
+    });
+
+    renderExperiencesSlide(currentSlideIndex);
+  </script>
+
 </body>
 </html>

@@ -12,7 +12,7 @@
 </head>
 <body>
   <aside class="sidebar">
-    <a class="brand" href="{% url 'homepage' %}">
+    <a class="brand" href="{% url 'landing' %}">
       <span class="brand-mark">L</span>
       <span>LUXIOUS <small>HOTEL</small></span>
     </a>
@@ -137,7 +137,7 @@
                       <small>{{ booking.venue.get_room_type_display }}</small>
                     </td>
                     <td>{{ booking.booking_date|date:"M j, Y · g:i a" }}</td>
-                    <td><span class="status">{{ booking.status }}</span></td>
+                    <td><span class="status">{{ booking.current_status }}</span></td>
                   </tr>
                 {% endfor %}
               </tbody>
@@ -182,7 +182,10 @@
 
     <footer class="page-footer">
       <span>Luxious Hotel · Modern comfort, rooted in nature.</span>
-      <a href="{% url 'landing' %}">Return to the hotel website</a>
+      <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button class="link-button" type="submit">Log out</button>
+      </form>
     </footer>
   </main>
 </body>
