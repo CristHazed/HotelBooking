@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Italianno&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../static/landing.css">
+  <link rel="stylesheet" href="static/style/landing.css">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
      <div class="brand-and-nav">
          <nav class="navbar">
             <div class="brand">
-              <img src="../static/Images/hotel-logo.webp" alt="Lushiux Hotel Logo" class="brand-logo">
+              <img src="static/assets/Images/hotel-logo.webp" alt="Lushiux Hotel Logo" class="brand-logo">
               <span class="brand-name">LUSHIUX HOTEL</span>
             </div>
 
@@ -29,8 +29,8 @@
             </ul>
 
             <div class="nav-actions">
-              <a href="#book" class="btn-book">Book Now</a>
-              <a href="#auth" class="btn-auth">Log in / Sign up</a>
+              <a href="{% url 'homepage' %}" class="btn-book">Book Now</a>
+              <a href="{% url 'login' %}" class="btn-auth">Log in / Sign up</a>
             </div>
         </nav>
      </div>
@@ -59,14 +59,14 @@
       </div>
 
       <div class="diamond-gallery">
-        <div class="diamond-card diamond-1">
-          <img src="../static/Images/about-canopy-lounge.webp" alt="Open-air bamboo pavilion overlooking lush forest">
+        <div class="diamond-card_diamond-1">
+          <img src="static/assets/Images/about-canopy-lounge.webp" alt="Open-air bamboo pavilion overlooking lush forest">
         </div>
-        <div class="diamond-card diamond-2">
-          <img src="../static/Images/about-stargazing.webp" alt="Stargazers looking up at the night sky with a telescope">
+        <div class="diamond-card_diamond-2">
+          <img src="static/assets/Images/about-stargazing.webp" alt="Stargazers looking up at the night sky with a telescope">
         </div>
-        <div class="diamond-card diamond-3">
-          <img src="../static/Images/about-infinity-pool.webp" alt="Infinity pool overlooking tropical hills and palm trees">
+        <div class="diamond-card_diamond-3">
+          <img src="static/assets/Images/about-infinity-pool.webp" alt="Infinity pool overlooking tropical hills and palm trees">
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@
     <div class="footer-container">
       <!-- Left Column: Gold Logo, Brand Name & Tagline -->
       <div class="footer-brand">
-        <img src="../static/Images/lushiux-hotel-gold-logo.webp" alt="Lushiux Hotel Gold Emblem" class="footer-logo">
+        <img src="static/assets/Images/lushiux-hotel-gold-logo.webp" alt="Lushiux Hotel Gold Emblem" class="footer-logo">
         <span class="footer-brand-name">LUSHIUX HOTEL</span>
         <p class="footer-tagline">The Canopy of Modern Escape</p>
       </div>
@@ -136,10 +136,10 @@
 
         <div class="footer-socials">
           <a href="#facebook" aria-label="Lushiux Hotel Facebook">
-            <img src="../static/Images/facebook-gold-icon.webp" alt="Facebook">
+            <img src="static/assets/Images/facebook-gold-icon.webp" alt="Facebook">
           </a>
           <a href="#instagram" aria-label="Lushiux Hotel Instagram">
-            <img src="../static/Images/instagram-gold-icon.webp" alt="Instagram">
+            <img src="static/assets/Images/instagram-gold-icon.webp" alt="Instagram">
           </a>
         </div>
       </div>
@@ -159,7 +159,7 @@
         items: [
           {
             title: 'Celestial Stargazing',
-            image: '../static/Images/exp-stargazing.webp',
+            image: 'static/assets/Images/exp-stargazing.webp',
             alt: 'Night sky over forest horizon',
             perks: [
               'Mountaintop observatory access',
@@ -169,7 +169,7 @@
           },
           {
             title: 'Canopy Expedition',
-            image: '../static/Images/exp-canopy.webp',
+            image: 'static/assets/Images/exp-canopy.webp',
             alt: 'Looking up through sunlit forest canopy',
             perks: [
               'Guided hanging rope-bridge tour',
@@ -179,7 +179,7 @@
           },
           {
             title: 'Ridge & River Trek',
-            image: '../static/Images/exp-ridge-river.webp',
+            image: 'static/assets/Images/exp-ridge-river.webp',
             alt: 'River reflecting mountain ridges at dusk',
             perks: [
               'Sunrise valley ridge hike',
@@ -195,7 +195,7 @@
         items: [
           {
             title: 'Forest Thermal Spa',
-            image: '../static/Images/exp-thermal-spa.webp',
+            image: 'static/assets/Images/exp-thermal-spa.webp',
             alt: 'Waterfall feeding a warm forest pool',
             perks: [
               'Private mountain stream access',
@@ -205,7 +205,7 @@
           },
           {
             title: 'Canopy Infinity Hydro-Spa',
-            image: '../static/Images/exp-hydro-spa.webp',
+            image: 'static/assets/Images/exp-hydro-spa.webp',
             alt: 'Arched indoor-outdoor hydrotherapy pool',
             perks: [
               'Glass-bottom infinity pool pass',
@@ -221,7 +221,7 @@
         items: [
           {
             title: 'Artisanal Continental Breakfast',
-            image: '../static/Images/exp-continental-breakfast.webp',
+            image: 'static/assets/Images/exp-continental-breakfast.webp',
             alt: 'Morning artisan dining experience',
             perks: [
               'Fresh pastries & sourdough',
@@ -231,7 +231,7 @@
           },
           {
             title: 'Lushiux Grand Breakfast Buffet',
-            image: '../static/Images/exp-breakfast-buffet.webp',
+            image: 'static/assets/Images/exp-breakfast-buffet.webp',
             alt: 'Skyview lounge dining experience',
             perks: [
               'Unlimited Skyview Hall access',
@@ -241,7 +241,7 @@
           },
           {
             title: 'Canopy Glass Karaoke Pod',
-            image: '../static/Images/exp-karaoke.webp',
+            image: 'static/assets/Images/exp-karaoke.webp',
             alt: 'Private glass pod screening experience',
             perks: [
               'Soundproofed canopy glass pod',
@@ -251,7 +251,7 @@
           },
           {
             title: 'Executive Gaming Lounge Pass',
-            image: '../static/Images/exp-gaming-lounge.webp',
+            image: 'static/assets/Images/exp-gaming-lounge.webp',
             alt: 'Private lounge and gaming suite',
             perks: [
               'Private sound-insulated suite',
