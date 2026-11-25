@@ -1,0 +1,579 @@
+:root {
+    --bg-cream: #F8F6F0;
+    --sidebar-green: #0B221B;
+    --sidebar-hover: #12352A;
+    --accent-gold: #C5A059;
+    --accent-gold-hover: #b08d46;
+    --text-dark: #1E221E;
+    --text-muted: #6A726E;
+    --card-bg: #FFFFFF;
+    --border-color: #E6E2D6;
+    --danger: #A94442;
+    --danger-bg: #FDF2F2;
+    --success: #2E5A44;
+    --success-bg: #EEF5F2;
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    display: flex;
+    min-height: 100vh;
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 280px;
+    background-color: var(--sidebar-green);
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.logo-mark {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--accent-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--accent-gold);
+    border-radius: 4px;
+}
+
+.brand-text h1 {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.brand-text p {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--accent-gold);
+}
+
+.nav-section-title {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #8C9692;
+    margin-bottom: 15px;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    color: #C1C7C4;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: var(--sidebar-hover);
+    color: #FFFFFF;
+}
+
+.nav-item i {
+    width: 18px;
+    color: var(--accent-gold);
+}
+
+.sidebar-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar-small {
+    width: 36px;
+    height: 36px;
+    background-color: var(--accent-gold);
+    color: var(--sidebar-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.user-info-small {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.user-status {
+    font-size: 11px;
+    color: var(--accent-gold);
+}
+
+/* Main Content Styling */
+.main-content {
+    margin-left: 280px;
+    flex-grow: 1;
+    padding: 40px;
+    max-width: calc(100% - 280px);
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.header-breadcrumb span {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+}
+
+.header-breadcrumb h2 {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-top: 4px;
+}
+
+.header-profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.notification-badge {
+    font-size: 18px;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.profile-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #FFFFFF;
+    padding: 6px 14px 6px 6px;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    background-color: var(--sidebar-green);
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    background-color: var(--sidebar-green);
+    color: #FFFFFF;
+    padding: 40px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.sub-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.welcome-banner h1 {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 400;
+    margin-bottom: 8px;
+}
+
+.welcome-banner h1 .italic {
+    font-style: italic;
+    color: var(--accent-gold);
+}
+
+.welcome-banner p {
+    font-size: 14px;
+    color: #C1C7C4;
+}
+
+.plan-btn {
+    background-color: var(--accent-gold);
+    color: var(--sidebar-green);
+    border: none;
+    padding: 12px 24px;
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.plan-btn:hover {
+    background-color: var(--accent-gold-hover);
+}
+
+/* Tabs */
+.tabs-container {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.2s;
+}
+
+.tab-btn.active {
+    background-color: var(--sidebar-green);
+    color: #FFFFFF;
+}
+
+/* Bookings Grid */
+.bookings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+}
+
+.booking-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.booking-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.card-header-bar {
+    padding: 16px 20px;
+    background-color: #FAFAFA;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ref-code {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.status-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.upcoming {
+    background-color: var(--success-bg);
+    color: var(--success);
+}
+
+.status-badge.completed {
+    background-color: #EAEFF5;
+    color: #2C4C6E;
+}
+
+.status-badge.cancelled {
+    background-color: var(--danger-bg);
+    color: var(--danger);
+}
+
+.card-body {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.room-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.room-type {
+    font-size: 12px;
+    color: var(--accent-gold);
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.booking-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid #F0ECE1;
+    padding-top: 14px;
+}
+
+.booking-details div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.booking-details span strong {
+    color: var(--text-dark);
+}
+
+.card-footer-actions {
+    padding: 14px 20px;
+    background-color: #FAFAFA;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 10px;
+}
+
+.btn-action {
+    flex: 1;
+    padding: 9px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background: #FFFFFF;
+    color: var(--text-dark);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-action:hover {
+    background-color: var(--sidebar-green);
+    color: #FFFFFF;
+    border-color: var(--sidebar-green);
+}
+
+.btn-action.cancel-action:hover {
+    background-color: var(--danger);
+    border-color: var(--danger);
+    color: #FFFFFF;
+}
+
+/* Modals */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 34, 27, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-card {
+    background: #FFFFFF;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: modalScale 0.3s ease;
+}
+
+.modal-card.small-modal {
+    max-width: 400px;
+}
+
+@keyframes modalScale {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    background: var(--sidebar-green);
+    color: #FFFFFF;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.receipt-brand {
+    font-family: var(--font-serif);
+    letter-spacing: 2px;
+    font-size: 16px;
+    color: var(--accent-gold);
+}
+
+.modal-header h3 {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 25px;
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+.modal-footer {
+    padding: 15px 25px;
+    background: #FAFAFA;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-primary, .btn-secondary, .btn-danger {
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background: var(--sidebar-green);
+    color: #FFFFFF;
+}
+
+.btn-secondary {
+    background: #E2E8E4;
+    color: var(--text-dark);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #FFFFFF;
+}
+
+.warning-text {
+    font-size: 12px;
+    color: var(--danger);
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Receipt Details Styles inside Modal */
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.receipt-total {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--sidebar-green);
+    border-top: 2px solid var(--sidebar-green);
+    padding-top: 10px;
+    margin-top: 10px;
+    border-bottom: none;
+}
+

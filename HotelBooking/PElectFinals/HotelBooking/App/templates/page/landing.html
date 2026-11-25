@@ -1,0 +1,176 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Discover a forest-inspired luxury stay at Luxious Hotel.">
+  <title>Luxious Hotel | A forest retreat</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style/landing.css' %}">
+  <script src="{% static 'JSFile/main.js' %}" defer></script>
+</head>
+<body>
+  <div class="top-strip">
+    <span>AN INTIMATE FOREST RETREAT</span>
+    <span>Modern comfort, rooted in nature</span>
+  </div>
+
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="{% url 'landing' %}">
+        <span class="brand-mark">L</span>
+        <span class="brand-name">LUXIOUS <small>HOTEL</small></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-label="Open menu" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav">
+        <a href="#experience">The retreat</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#amenities">Experiences</a>
+        <a href="#offers">Offers</a>
+      </nav>
+
+      <div class="nav-actions">
+        {% if request.user.is_authenticated %}
+        <a class="profile-link" href="{% url 'homepage' %}">
+        <span class="profile-initial">{{ request.user.username|first|upper }}</span>
+        <span>{{ request.user.username }}</span>
+        </a>
+        <a class="button button-gold" href="{% url 'my_bookings' %}">My bookings <span>↗</span></a>
+        {% else %}
+        <a class="sign-in" href="{% url 'login' %}">Sign in</a>
+        <a class="button button-gold" href="#booking">Book your stay <span>↗</span></a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="experience">
+      <div class="hero-photo" role="img" aria-label="Sunlight falling through a quiet forest"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow eyebrow-light">A slower kind of stay</p>
+        <h1>Where the forest<br>meets <em>fine living.</em></h1>
+        <p>
+          Step into a quieter world of natural textures, considered comfort
+          and warm hospitality.
+        </p>
+        <a class="button button-gold" href="#booking">Discover your stay <span>↗</span></a>
+      </div>
+      <span class="hero-caption">LUXIOUS HOTEL · NATURE, REFINED</span>
+    </section>
+
+    <section class="booking-panel" id="booking">
+      <div class="booking-intro">
+        <p class="eyebrow">Make yourself at home</p>
+        <h2>Your forest<br><em>escape begins here.</em></h2>
+        <p>Choose your room and arrival date to begin a reservation.</p>
+      </div>
+
+      <form class="booking-form" method="post" action="{% url 'book_venue' %}">
+        {% csrf_token %}
+        {{ booking_form.non_field_errors }}
+
+        <div class="field">
+          <label for="{{ booking_form.venue.id_for_label }}">Room</label>
+          {{ booking_form.venue }}
+          {{ booking_form.venue.errors }}
+        </div>
+
+        <div class="field">
+          <label for="{{ booking_form.booking_date.id_for_label }}">Arrival date and time</label>
+          {{ booking_form.booking_date }}
+          {{ booking_form.booking_date.errors }}
+        </div>
+
+        <div class="field">
+          <label for="{{ booking_form.checkout_date.id_for_label }}">Checkout date and time</label>
+          {{ booking_form.checkout_date }}
+          {{ booking_form.checkout_date.errors }}
+        </div>
+
+        {{ Itinerary_form.non_field_errors }}
+        <div class="field">
+          <label for="{{ Itirenarie_form.participants.id_for_label }}">Participants</label>
+          {{ Itirenarie_form.participants }}
+          {{ Itirenarie_form.participants.errors }}
+        </div>
+
+        <button class="button button-forest booking-submit" type="submit">
+          Check availability <span>→</span>
+        </button>
+        <small class="booking-hint">Sign in is required to complete a reservation.</small>
+      </form>
+    </section>
+
+    <section class="rooms-section section-wrap" id="rooms">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Rest among the trees</p>
+          <h2>Rooms shaped<br>by <em>the landscape.</em></h2>
+        </div>
+        <p>
+          Explore the room types currently available at Luxious Hotel.
+          Select a room in the booking form to continue.
+        </p>
+      </div>
+
+      <div class="room-type-grid">
+        {% for group in room_groups %}
+          <article class="room-type-card">
+            <span class="room-symbol">✳</span>
+            <p class="room-kicker">ROOM COLLECTION</p>
+            <h3>{{ group.label }}</h3>
+            <p class="availability">{{ group.count }} available room{{ group.count|pluralize }}</p>
+            <a href="#booking">Choose a room <span>↗</span></a>
+          </article>
+        {% empty %}
+          <p class="empty-state">No rooms are currently available. Please check back soon.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="amenities-section" id="amenities">
+      <div class="amenities-photo" role="img" aria-label="A peaceful forest setting"></div>
+      <div class="amenities-copy">
+        <p class="eyebrow eyebrow-light">Grounded in nature</p>
+        <h2>Let the day<br>unfold <em>gently.</em></h2>
+        <p>
+          Find a peaceful corner, enjoy a slower morning and return to the
+          comfort of a thoughtfully appointed room.
+        </p>
+        <a class="light-link" href="#booking">Plan your visit <span>→</span></a>
+      </div>
+    </section>
+
+    <section class="offer-section" id="offers">
+      <p class="eyebrow">A reason to linger</p>
+      <h2>Make space for<br><em>something restorative.</em></h2>
+      <p>Choose an available room and arrival date to start planning your stay.</p>
+      <a class="button button-forest" href="#booking">Explore availability <span>↗</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand brand-footer" href="{% url 'landing' %}">
+      <span class="brand-mark">L</span>
+      <span class="brand-name">LUXIOUS <small>HOTEL</small></span>
+    </a>
+    <span>Modern comfort, rooted in nature.</span>
+    <div class="footer-links">
+      <a href="{% url 'signup' %}">Create an account</a>
+      <a href="{% url 'login' %}">Sign in</a>
+      <a href="#experience">Back to top ↑</a>
+    </div>
+  </footer>
+</body>
+</html>
