@@ -39,8 +39,16 @@
       </nav>
 
       <div class="nav-actions">
+        {% if request.user.is_authenticated %}
+        <a class="profile-link" href="{% url 'homepage' %}">
+        <span class="profile-initial">{{ request.user.username|first|upper }}</span>
+        <span>{{ request.user.username }}</span>
+        </a>
+        <a class="button button-gold" href="{% url 'my_bookings' %}">My bookings <span>↗</span></a>
+        {% else %}
         <a class="sign-in" href="{% url 'login' %}">Sign in</a>
         <a class="button button-gold" href="#booking">Book your stay <span>↗</span></a>
+        {% endif %}
       </div>
     </div>
   </header>
@@ -82,6 +90,24 @@
           <label for="{{ booking_form.booking_date.id_for_label }}">Arrival date and time</label>
           {{ booking_form.booking_date }}
           {{ booking_form.booking_date.errors }}
+        </div>
+
+        <div class="field">
+          <label for="{{ booking_form.checkout_date.id_for_label }}">Checkout date and time</label>
+          {{ booking_form.checkout_date }}
+          {{ booking_form.checkout_date.errors }}
+        </div>
+
+        <div class="field">
+          <label for="{{ booking_form.guest_count.id_for_label }}">Guests Count</label>
+          {{ booking_form.guest_count }}
+          {{ booking_form.guest_count.errors }}
+        </div>
+
+        <div class="field">
+          {{ booking_form.itineraries.label_tag }}
+          {{ booking_form.itineraries }}
+          {{ booking_form.itineraries.errors }}
         </div>
 
         <button class="button button-forest booking-submit" type="submit">

@@ -1,7 +1,7 @@
 import uuid
 from decimal import Decimal
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta, datetime, time
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -26,15 +26,15 @@ class Room(models.Model):
     ROOM_TYPES = [
         ('Standard', 'Standard Room'),
         ('Deluxe', 'Deluxe / Suite'),
-        ('VIP', 'Important Guess'),
+        ('VIP', 'Important Guest'),
         ('Deluxe Plus', 'Delux Capacity')
     ]
-    name = models.CharField(max_length=150)                                             # Name of the Room / Room Number
-    room_type = models.CharField(max_length=50, choices=ROOM_TYPES, default='Standard') # ROOM_TYPES
-    capacity = models.IntegerField()                                                    # Capacity (1-4)
-    is_available = models.BooleanField(default=True)                                    # Room availability
-    price_per_night = models.IntegerField(default=0)                                    # Room Price
-    room_description = models.TextField(max_length=5000, default='Failed to load description') # Room Description
+    name = models.CharField(max_length=150)                                                     # Name of the Room / Room Number
+    room_type = models.CharField(max_length=50, choices=ROOM_TYPES, default='Standard')         # ROOM_TYPES
+    capacity = models.IntegerField()                                                            # Capacity (1-4)
+    is_available = models.BooleanField(default=True)                                            # Room availability
+    price_per_night = models.IntegerField(default=0)                                            # Room Price
+    room_description = models.TextField(max_length=5000, default='Failed to load description')  # Room Description
 
     # Books the rooms
     def book(self):
@@ -51,7 +51,7 @@ class Room(models.Model):
 
     def __str__(self):
         status = "Available" if self.is_available else "Booked"
-        return f"{self.name} (Capacity: {self.capacity}) - [{status}]"
+        return f"{self.name} (Capacity: {self.capacity}) : [{status}]"
 
 class StandardRoom(Room):
     class Meta:
@@ -63,16 +63,15 @@ class StandardRoom(Room):
         if not self.pk:
             self.room_type = 'Standard'
             if self.capacity is None:
-                self.capacity = 2
+                self.capacity = 1
 
-    def calculate_StandardRate(self, stay_duration, guest_count):
+    def calculate_StandardRate(self, stay_duration):
         if stay_duration <= 0:
             raise ValueError("Stay duration must be greater than 0")
         total_rate = self.base_rate * stay_duration
-        if guest_count > self.capacity:
-            extra_guests = guest_count - self.capacity
-            total_rate += extra_guests * self.extra_guest_fee
-        return total_rate
+        if self.guest > self.capacity:
+            room_total = (self.guest_count * self.extra_guest_fee) + total_rate
+        return room_total
     
 class DeluxeRoom(Room):
     class Meta:
@@ -201,6 +200,15 @@ class Booking(models.Model):
         if not self.reservation_number:
             unique_code = uuid.uuid4().hex[:8].upper()
             self.reservation_number = f"RES-{unique_code}"
+
+        # saves the booking and checkout date and defaults the time to standard 11pm checkout and 2pm checkin
+        if self.booking_date:
+            if not isinstance(self.booking_date, datetime):
+                self.booking_date = datetime.combine(self.booking_date, time(14, 0, 0))
+
+        if self.checkout_date:
+            if not isinstance(self.checkout_date, datetime):
+                self.checkout_date = datetime.combine(self.checkout_date, time(11, 0, 0))
         super().save(*args, **kwargs)
 
     # Function if cancellation is requested

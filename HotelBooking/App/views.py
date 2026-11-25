@@ -114,6 +114,7 @@ def homepage(request):
     }
     return render(request, "page/home.html", context)
 
+
 @login_required
 def create_booking_view(request):
     if request.method == 'POST':
@@ -121,11 +122,13 @@ def create_booking_view(request):
         if form.is_valid():
             booking = form.save(commit=False)
             venue = booking.venue
+            
 
             if venue.book():
                 booking.user = request.user
                 booking.status = "Confirmed"
                 booking.save()
+                form.save_m2m()
                 
                 return render(request, 'page/booking_success.html', {'booking': booking})
             else:
@@ -133,7 +136,7 @@ def create_booking_view(request):
     else:
         form = BookingForm()
 
-    return render(request, 'page/form.html', {'form': form})
+    return render(request, 'page/landing.html', {'form': form})
 
 # Renders successfull booking information
 @login_required
