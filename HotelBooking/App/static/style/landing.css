@@ -21,7 +21,7 @@ body, html {
   min-height: 100vh;
   background-image:
     linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.35) 100%),
-    url('../Images/landing-page-background.webp');
+    url('../assets/Images/landing-page-background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -202,7 +202,7 @@ body, html {
   min-height: 100vh;
   background-image:
     linear-gradient(rgba(14, 24, 18, 0.58), rgba(14, 24, 18, 0.68)),
-    url('../Images/about-background.webp');
+    url('../assets/Images/about-background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -302,7 +302,7 @@ body, html {
   min-height: 100vh;
   background-image:
     linear-gradient(rgba(10, 18, 14, 0.52), rgba(10, 18, 14, 0.62)),
-    url('../Images/experiences-background.webp');
+    url('../assets/Images/experiences-background.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
