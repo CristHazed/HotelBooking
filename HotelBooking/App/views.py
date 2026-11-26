@@ -38,6 +38,51 @@ def landing_page(request):
         "room_groups": room_groups,
     })
 
+def homepage(request):
+    available_rooms = Room.objects.filter(is_available=True)
+    room_type_labels = dict(Room.ROOM_TYPES)
+
+    # Sidebar counts by room_type
+    room_groups = []
+    for room_type, label in Room.ROOM_TYPES:
+        count = available_rooms.filter(room_type=room_type).count()
+        if count:
+            room_groups.append({
+                "value": room_type,
+                "label": label,
+                "count": count,
+            })
+
+    # Group cards strictly by class (room_type) and capacity
+    grouped_rooms_qs = (
+        available_rooms
+        .values("room_type", "capacity")
+        .annotate(available_count=Count("id"))
+        .order_by("room_type", "capacity")
+    )
+
+    rooms = [
+        {
+            "room_type": item["room_type"],
+            "class_label": room_type_labels.get(item["room_type"], item["room_type"]),
+            "capacity": item["capacity"],
+            "available_count": item["available_count"],
+        }
+        for item in grouped_rooms_qs
+    ]
+
+    booking_form = BookingForm()
+    booking_form.fields["venue"].queryset = (
+        available_rooms.order_by("room_type", "name")
+    )
+
+    return render(request, "page/home.html", {
+        "booking_form": booking_form,
+        "room_groups": room_groups,
+        "available_rooms_count": available_rooms.count(),
+        "rooms": rooms,
+    })
+
 
 # Sign Up Template
 def signup_view(request):
@@ -78,7 +123,7 @@ def login_view(request):
 
 # Log In required Templates
 @login_required
-def homepage(request):
+def profile(request):
     profile = UserProfile.objects.filter(user=request.user).first()
 
     bookings = (
@@ -112,7 +157,7 @@ def homepage(request):
         "available_room_count": Room.objects.filter(is_available=True).count(),
         "room_type_summary": room_type_summary,
     }
-    return render(request, "page/home.html", context)
+    return render(request, "page/profile.html", context)
 
 
 @login_required

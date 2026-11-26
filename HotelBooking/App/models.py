@@ -27,9 +27,9 @@ class Room(models.Model):
         ('Standard', 'Standard Room'),
         ('Deluxe', 'Deluxe / Suite'),
         ('VIP', 'Important Guest'),
-        ('Deluxe Plus', 'Delux Capacity')
     ]
-    name = models.CharField(max_length=150)                                                     # Name of the Room / Room Number
+    name = models.CharField(max_length=150)                                                     # Name of the Room
+    room_number = models.IntegerField(default=200)                                              # Room number
     room_type = models.CharField(max_length=50, choices=ROOM_TYPES, default='Standard')         # ROOM_TYPES
     capacity = models.IntegerField()                                                            # Capacity (1-4)
     is_available = models.BooleanField(default=True)                                            # Room availability
@@ -115,28 +115,6 @@ class VIPRoom(Room):
             total_rate += extra_guests * self.extra_guest_fee
         return total_rate
     
-class DeluxePlusRoom(Room):
-    class Meta:
-        proxy = True
-            
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.extra_guest_fee = Decimal('125.00')
-        if not self.pk:
-            self.room_type = 'Deluxe Plus'
-            if self.capacity is None:
-                self.capacity = 5
-        
-    def calculate_DeluxePlusRate(self, stay_duration, guest_count):
-        if stay_duration <= 0:
-            raise ValueError("Stay duration must be greater than 0")
-        total_rate = self.base_rate * stay_duration
-        if guest_count > self.capacity:
-            extra_guests = guest_count - self.capacity
-            total_rate += extra_guests * self.extra_guest_fee
-        return total_rate
-
-
 class Itinerarie(models.Model):
     CATEGORIES = [
         ("adventure", "Adventure"),

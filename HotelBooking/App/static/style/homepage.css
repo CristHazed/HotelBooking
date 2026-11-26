@@ -1,0 +1,945 @@
+/* =========================================================
+   LUSHIUX HOTEL THEME VARIABLES
+   Extracted from Landing Page:
+   - Deep Rainforest Emerald (#0f241d / #103628)
+   - Warm Canopy Gold (#e4c648)
+   - Serif Editorial Display + Clean Modern Sans
+   ========================================================= */
+:root {
+  --bg-page: #121c18;
+  --bg-surface: #182620;
+  --bg-surface-hover: #1f3129;
+  --bg-emerald-deep: #103628;
+  --bg-flow-bar: #0b1410;
+
+  --gold-primary: #e4c648;
+  --gold-hover: #f0d45c;
+  --gold-muted: rgba(228, 198, 72, 0.14);
+  --gold-border: rgba(228, 198, 72, 0.35);
+
+  --text-primary: #f5f3ec;
+  --text-secondary: #b7c2bc;
+  --text-muted: #83948b;
+  --text-dark: #14221b;
+
+  --border-subtle: rgba(245, 243, 236, 0.12);
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --transition: 0.22s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* =========================================================
+   1. TOP BOOKING FLOW PROGRESS BAR (Wireframe Top Strip)
+   ========================================================= */
+.flow-bar {
+  background-color: var(--bg-flow-bar);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 12px;
+  padding: 10px 0;
+}
+
+.flow-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.flow-label {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.flow-steps {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.flow-step {
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.flow-step span {
+  margin-right: 4px;
+  opacity: 0.75;
+}
+
+.flow-step.active {
+  background-color: var(--gold-muted);
+  color: var(--gold-primary);
+  font-weight: 600;
+}
+
+/* =========================================================
+   2. MAIN HEADER (Lushiux Hotel Navigation)
+   ========================================================= */
+.site-header {
+  background-color: rgba(16, 36, 28, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 82px;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.brand-sub {
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.main-nav a {
+  color: var(--text-secondary);
+  position: relative;
+  padding: 6px 0;
+  transition: var(--transition);
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--gold-primary);
+}
+
+.main-nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background-color: var(--gold-primary);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-gold {
+  background-color: var(--gold-primary);
+  color: var(--text-dark);
+  border: none;
+  padding: 10px 20px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-gold:hover {
+  background-color: var(--gold-hover);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border: 1px solid rgba(245, 243, 236, 0.45);
+  color: var(--text-primary);
+  padding: 9px 16px;
+  font-size: 12px;
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.btn-outline:hover {
+  border-color: var(--gold-primary);
+  color: var(--gold-primary);
+}
+
+/* =========================================================
+   3. BREADCRUMB & PAGE TITLE HEADER
+   ========================================================= */
+.main-content {
+  padding: 32px 0 64px;
+  background: radial-gradient(circle at 80% 10%, rgba(28, 66, 50, 0.35), transparent 55%);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.breadcrumb a:hover {
+  color: var(--gold-primary);
+}
+
+.breadcrumb .current {
+  color: var(--text-secondary);
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.page-title {
+  font-family: var(--font-serif);
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+.page-title em {
+  font-style: italic;
+  color: var(--gold-primary);
+}
+
+.stay-meta {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.stay-meta strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.sort-select {
+  appearance: none;
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 11px 18px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  min-width: 200px;
+  transition: var(--transition);
+}
+
+.sort-select:hover,
+.sort-select:focus {
+  border-color: var(--gold-primary);
+  outline: none;
+}
+
+/* =========================================================
+   4. BROWSE TWO-COLUMN LAYOUT (SIDEBAR + 3-COL GRID)
+   ========================================================= */
+.browse-layout {
+  display: grid !important;
+  grid-template-columns: 240px minmax(0, 1fr) !important;
+  gap: 32px !important;
+  width: 100% !important;
+  align-items: start;
+}
+
+.browse-layout > *,
+.browse-layout > div:last-child {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.rooms-section,
+.rooms-container {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Filter Sidebar */
+.filter-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.filter-heading {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.room-type-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.type-btn {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.type-btn:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.type-btn.active {
+  background-color: var(--gold-muted);
+  color: var(--gold-primary);
+  font-weight: 600;
+  border-left: 3px solid var(--gold-primary);
+}
+
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 24px 0;
+}
+
+/* Custom Checkboxes */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input {
+  display: none;
+}
+
+.custom-check {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--text-muted);
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.checkbox-label input:checked + .custom-check {
+  background-color: var(--gold-primary);
+  border-color: var(--gold-primary);
+}
+
+.checkbox-label input:checked + .custom-check::after {
+  content: "✓";
+  color: var(--text-dark);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Your Stay Card */
+.your-stay-card {
+  margin-top: 28px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+}
+
+.stay-card-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gold-primary);
+  margin-bottom: 6px;
+}
+
+.stay-card-details {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stay-card-sub {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   5. ROOMS GRID & CARDS
+   ========================================================= */
+.results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.results-count {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.reset-btn {
+  background: none;
+  border: none;
+  color: var(--gold-primary);
+  font-size: 12.5px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#roomsGrid.rooms-grid,
+.rooms-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 20px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.room-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.room-card:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--gold-border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+}
+
+.room-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  background-color: var(--gold-primary);
+  opacity: 0;
+  z-index: 2;
+  transition: var(--transition);
+}
+
+.room-card:hover::before {
+  opacity: 1;
+}
+
+/* Bounded Media / Image Area */
+.room-media,
+.room-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 175px;
+  background-color: var(--bg-emerald-deep);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-media img,
+.room-image-wrap img,
+.room-img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  transition: transform 0.35s ease;
+}
+
+.room-card:hover .room-media img,
+.room-card:hover .room-image-wrap img,
+.room-card:hover .room-img {
+  transform: scale(1.04);
+}
+
+.room-tag-overlay {
+  position: absolute;
+  background-color: rgba(16, 36, 28, 0.86);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--gold-border);
+  color: var(--text-primary);
+  padding: 6px 14px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+}
+
+/* Card Body & Footer */
+.room-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px 20px 20px;
+}
+
+.room-badge {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold-primary);
+  margin-bottom: 8px;
+}
+
+.room-title,
+.room-name {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+.room-price {
+  margin-top: 3px;
+  font-size: 13.5px;
+  color: var(--gold-primary);
+  font-weight: 500;
+}
+
+.room-card-footer,
+.room-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.room-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.info-label,
+.capacity-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.info-value,
+.capacity-value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.room-select-arrow,
+.room-action {
+  color: var(--gold-primary);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.room-card:hover .room-select-arrow,
+.room-card:hover .room-action {
+  transform: translateX(4px);
+}
+
+.rooms-empty {
+  grid-column: 1 / -1;
+  background-color: var(--bg-surface);
+  border: 1px dashed var(--gold-border);
+  padding: 40px 20px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Template Meta Footer Strip */
+.template-meta-bar {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.page-indicator {
+  color: var(--gold-primary);
+  font-weight: 600;
+}
+
+/* =========================================================
+   6. DARK EMERALD FOOTER (Exact Lushiux Hotel Footer)
+   ========================================================= */
+.site-footer {
+  background-color: var(--bg-emerald-deep);
+  border-top: 2px solid var(--gold-primary);
+  padding-top: 56px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.4fr 0.8fr;
+  gap: 40px;
+  align-items: start;
+  padding-bottom: 48px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-logo {
+  margin-top: 14px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+}
+
+.footer-tagline {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+.footer-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-info h4 {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--gold-primary);
+  margin-bottom: 4px;
+}
+
+.footer-info p {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.checkin-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-links ul {
+  list-style: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.footer-links a:hover {
+  color: var(--gold-primary);
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+}
+
+.social-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--gold-primary);
+  color: var(--bg-emerald-deep);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.social-square {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-bottom {
+  background-color: #0b241b;
+  text-align: center;
+  padding: 16px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   7. QUICK PREVIEW MODAL
+   ========================================================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 14, 11, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-md);
+  max-width: 520px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: rgba(16, 36, 28, 0.85);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal-image {
+  height: 230px;
+  background-size: cover;
+  background-position: center;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-badge {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold-primary);
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  margin: 4px 0 10px;
+}
+
+.modal-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.modal-pricing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.modal-rate {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold-primary);
+}
+
+.modal-total {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================= */
+@media (max-width: 980px) {
+  .browse-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  #roomsGrid.rooms-grid,
+  .rooms-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .main-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #roomsGrid.rooms-grid,
+  .rooms-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .flow-steps {
+    gap: 8px;
+  }
+}
