@@ -35,6 +35,7 @@ class Room(models.Model):
     is_available = models.BooleanField(default=True)                                            # Room availability
     price_per_night = models.IntegerField(default=0)                                            # Room Price
     room_description = models.TextField(max_length=5000, default='Failed to load description')  # Room Description
+    image = models.ImageField(upload_to='rooms/', null=True, blank=True)                        # Room Images
 
     # Books the rooms
     def book(self):
@@ -114,6 +115,14 @@ class VIPRoom(Room):
             extra_guests = guest_count - self.capacity
             total_rate += extra_guests * self.extra_guest_fee
         return total_rate
+
+class RoomImage(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='rooms/gallery/')
+    caption = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return f"Image for {self.room.name}"
     
 class Itinerarie(models.Model):
     CATEGORIES = [
